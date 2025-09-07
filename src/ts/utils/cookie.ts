@@ -16,7 +16,7 @@ export const cookies = () => {
         
         let gtagScript = document.createElement("script");
         gtagScript.async = true;
-        gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX";
+        gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-7LTJ46JCWB";
         document.head.appendChild(gtagScript);
 
         gtagScript.onload = function() {
@@ -26,7 +26,7 @@ export const cookies = () => {
             }
             window.gtag = gtag;
             gtag("js", new Date());
-            gtag("config", "G-XXXXXXXXXX", { "anonymize_ip": true });
+            gtag("config", "G-7LTJ46JCWB", { "anonymize_ip": true });
         };
     });
 };
