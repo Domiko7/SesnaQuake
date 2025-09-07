@@ -1,3 +1,6 @@
+// main.ts
+import './style.css';
+
 import { map } from "./ts/utils/map";
 import { speak } from "./ts/utils/speaker.ts";
 import { detectOS } from "./ts/utils/settings.ts";
