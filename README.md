@@ -18,7 +18,7 @@ Domikoによるリアルタイム地震警報アプリ
 
 ## 情報源
 - [Wolfx API ドキュメント](https://wolfx.jp/apidoc_en) – 地震早期警報データ  
-- [NIED観測所](https://www.lmoni.bosai.go.jp/monitor/) – 観測データ  
+- [NIED観測所](http://www.kmoni.bosai.go.jp/) – 観測データ  
 - [IRIS Travel Time Web Service](https://service.iris.edu/irisws/traveltime/) – 理論地震波到達時間（IASP91モデル）
 
 ---
@@ -58,7 +58,7 @@ A real-time earthquake alert app made by Domiko
 
 ## Sources
 - [Wolfx API Documentation](https://wolfx.jp/apidoc_en) – Earthquake early warning data  
-- [NIED Monitoring Stations](https://www.lmoni.bosai.go.jp/monitor/) – Observation data  
+- [NIED Monitoring Stations](http://www.kmoni.bosai.go.jp/) – Observation data  
 - [IRIS Travel Time Web Service](https://service.iris.edu/irisws/traveltime/) – Theoretical seismic travel times (IASP91 model)
 
 ---
