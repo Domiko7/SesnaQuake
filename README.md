@@ -1,8 +1,4 @@
 
-<div align="center">
-  <img alt="Discord" src="https://img.shields.io/discord/1334954823598084217">
-</div>
-
 # SesnaQuake
 A real-time earthquake alert app made by Domiko
 
