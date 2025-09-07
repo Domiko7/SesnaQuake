@@ -77,7 +77,7 @@ const updateNiedStations = async (): Promise<NiedStation[] | undefined> => {
       const stn = stations.find(stn => stn.name === target);
       if (stn) {
         const stationRgb: NiedColorStation = stn?.color;
-        if (stationRgb.b !== 0) {
+        if (stationRgb.r !== 0 || stationRgb.g !== 0 || stationRgb.b !== 0 ) {
           f.properties!.color = `rgb(${stationRgb.r}, ${stationRgb.g}, ${stationRgb.b})`;
         } else {
           f.properties!.opacity = 0;
