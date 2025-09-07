@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/SesnaQuake/images/SesnaQuake.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SesnaQuake</title>
+    <meta name="theme-color" content="#19b0c8"/>
+    <meta name="description" content="Track earthquakes reported by JMA in real-time!">
+    <meta name="title" content="SesnaQuake"/>
+    <meta name="author" content="Domiko"/>
+    <meta name="email" content="domikobusiness@gmail.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="/SesnaQuake/assets/index-BwWIxNub.js"></script>
+    <link rel="stylesheet" crossorigin href="/SesnaQuake/assets/index-D6C0cpol.css">
+  </head>
+  <body>
+    <div id="app">
+      <div id="map"></div>
+      <div class="panel" id="monitor-panel">
+
+        <h1 class="eew-inactive" data-i18n="eewInactive"></h1>
+
+        <div id="cookie-banner">
+          <p id="cookie-banner-text" data-i18n="cookieText"></p>
+          <button id="cookie-banner-button">OK</button>
+        </div>
+
+        <div class="panel-container earthquake-warning transparent" id="earthquake-warning-debug" style="border-color: #FF6200;">
+          <div class="earthquake-warning__top">
+            <div class="earthquake-warning__top-top panel-container-top">
+              <div class="earthquake-warning__title">
+                <img src="images/AlertTriangle.svg" alt="" class="alert-triangle">
+                <span class="earthquake-warning__title-text container-title">JMA - 地震</span>
+                <img src="images/AlertTriangle.svg" alt="" class="alert-triangle">
+              </div>
+
+              <div class="earthquake-warning__report-num" style="background-color: #FF6200;">
+                <span class="earthquake-warning__report-num-name">报告编号</span>
+                <span class="earthquake-warning__report-num-text">#11</span>
+              </div>
+
+            </div>
+            <div class="earthquake-warning__top-middle">
+                <span class="earthquake-warning__location container-subtitle">北海道南海岸付近</span>
+                <span class="earthquake-warning__earthquake-text">地震</span>
+            </div>
+            <div class="earthquake-warning__top-bottom">
+              <span class="earthquake-warning__time">2025/05/23 06:28:00</span>
+              <span class="earthquake-warning__time-text">时间</span>
+            </div>
+          </div>
+          <div class="earthquake-warning__middle">
+            <div class="earthquake-warning__seismic-intensity" style="background-color: #FF6200;">
+              <div class="earthquake-warning__seismic-intensity-left">
+                <div class="earthquake-warning__seismic-intensity-top">
+                  <span class="earthquake-warning__seismic-intensity-estimated-text">估计</span>
+                </div>
+                <div class="earthquake-warning__seismic-intensity-bottom">
+                  <span class="earthquake-warning__seismic-intensity-text">地震烈度</span>
+                </div>  
+              </div>
+              <div class="earthquake-warning__seismic-intensity-right">
+                <span class="earthquake-warning__seismic-intensity-number">5-</span>
+              </div>
+            </div>
+          </div>
+          <div class="earthquake-warning__bottom">
+            <div class="earthquake-warning__bottom-top">
+              <div class="earthquake-warning__magnitude-title">
+                <span class="earthquake-warning__magnitude-title-text">震级</span>
+              </div>
+              <div class="earthquake-warning__magnitude">
+                <span class="earthquake-warning__magnitude-text">5.4</span>
+              </div>
+            </div>
+            <div class="earthquake-warning__bottom-middle">
+              <div class="earthquake-warning__depth-title">
+                <span class="earthquake-warning__depth-title-text">深度</span>
+              </div>
+              <div class="earthquake-warning__depth">
+                <span class="earthquake-warning__depth-text">100km</span>
+              </div>
+            </div>
+            <div class="earthquake-warning__bottom-bottom">
+              <div class="earthquake-warning__note">
+                <span class="earthquake-warning__note-text">JMA 注記 - 緊急地震速報（予報）</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>
