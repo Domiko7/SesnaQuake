@@ -14,6 +14,7 @@ let earthquakeWarningDebug = document.getElementById("earthquake-warning-debug")
 earthquakeWarningDebug?.remove();
 
 realtimeStations();
-
-document.addEventListener("DOMContentLoaded", translatePage);
-cookies();
+document.addEventListener("DOMContentLoaded", () => {
+    translatePage();
+    cookies();
+});
