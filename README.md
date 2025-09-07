@@ -30,3 +30,41 @@ _Features in development or partially supported:_
  - earthquake reports
  - settings
  - improved ui
+
+-------
+
+# SesnaQuake
+Domikoによるリアルタイム地震警報アプリ
+
+> [!IMPORTANT]  
+> SesnaQuakeは現在**アルファ版**であり、不安定な場合があります。
+
+---
+
+## 機能
+- 日本向けリアルタイム地震早期警報（Wolfx API経由）  
+- NIEDの観測データ利用  
+- 今後さらに機能追加予定  
+
+---
+
+## 情報源
+- [Wolfx API ドキュメント](https://wolfx.jp/apidoc_en) – 地震早期警報データ  
+- [NIED観測所](https://www.lmoni.bosai.go.jp/monitor/) – 観測データ
+
+---
+## ソーシャルメディア
+- [Discordサーバー](https://discord.gg/vnDfPRrRh8)  
+- [YouTubeチャンネル](https://www.youtube.com/@DomikoLabs)
+
+--- 
+## 今後の機能
+_開発中または部分的に対応している機能:_  
+- 翻訳機能  
+- 地震レポート  
+- 設定機能  
+- UIの改善
+
+---
+
+**ENGLISH:** See original README above
