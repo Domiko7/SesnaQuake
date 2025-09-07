@@ -1,0 +1,14 @@
+{
+  "notification": "At {{time}}, an earthquake occurred with a maximum intensity of {{intensity}}, magnitude {{mag}}, and depth {{depth}}",
+  "eewLocated": "The earthquake occurred at {{location}}",
+  "jmaEewReport": "Japan Meteorological Agency report {{number}}, magnitude {{mag}}, depth {{depth}} km, intensity {{intensity}}",
+  "reportNumber": "Report number",
+  "earthquake": "Earthquake",
+  "time": "Time",
+  "estimated": "Estimated",
+  "intensity": "Earthquake intensity",
+  "mag": "Magnitude",
+  "depth": "Depth",
+  "eewInactive": "No earthquake early warnings",
+  "cookieText": "We use cookies for analytics. By continuing to browse, you agree."
+}

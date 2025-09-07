@@ -1,0 +1,14 @@
+{
+  "notification": "在{{time}}发生了一次最大烈度为{{intensity}}、震级为{{mag}}、深度为{{depth}}的地震",
+  "eewLocated": "地震发生在{{location}}",
+  "jmaEewReport": "日本气象厅报告 {{number}}，震级 {{mag}}，深度 {{depth}} 公里，地震度 {{intensity}}",
+  "reportNumber": "报告编号",
+  "earthquake": "地震",
+  "time": "时间",
+  "estimated": "估计",
+  "intensity": "地震烈度",
+  "mag": "震级",
+  "depth": "深度",
+  "eewInactive": "没有地震预警",
+  "cookieText": "我们使用 cookies 进行分析。继续浏览即表示您同意。"
+}

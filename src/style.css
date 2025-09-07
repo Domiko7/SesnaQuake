@@ -1,0 +1,262 @@
+
+:root {
+  --panel-width: 100vw;
+  --panel-height: 34vh;
+  --map-width: 100vw;
+  --map-height: 67vh;
+}
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Arimo", "Roboto", sans-serif;
+  font-weight: 600;
+  background-color: #242424;
+}
+
+#app {
+  height: 100%;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /*width: calc(100% - 400px);
+  height: 100vh;*/
+  width: var(--map-width);
+  height: var(--map-height);
+  z-index: 1;
+}
+
+.transparent {
+  opacity: 0;
+}
+
+.panel {
+  width: var(--panel-width);
+  height: var(--panel-height);
+  background-color: #282828;
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+  text-align: center;
+  overflow: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.panel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
+
+.panel-container {
+  background-color: #1C2A40;
+  color: #FFFF;
+  border-style: solid;
+  border-width: 7px;
+  border-radius: 20px;
+  margin: 1rem 2rem;
+}
+
+.panel-container-top {
+  display: flex;
+  background-color: #334768;
+  align-items: center;
+  padding: 1rem 1rem;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.earthquake-warning__title {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 4rem;
+}
+
+.container-title {
+  font-size: 1.2rem;
+}
+
+.panel-container-top {
+  justify-content: space-between;
+  padding: 0rem 0rem;
+}
+
+.alert-triangle {
+  width: 7.5vw;
+  height: 2vh;
+  padding: 0rem 0.5rem;
+}
+
+.earthquake-warning__report-num {
+  display: flex;
+  padding: 0rem 3rem;
+  color: #FCFFAF;
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+  /*padding-right: 9rem;*/
+}
+
+.earthquake-warning__report-num-name {
+  padding-right: 2rem;
+  font-size: 1rem;
+}
+
+.earthquake-warning__report-num-text {
+  font-size: 1.5rem;
+}
+
+.earthquake-warning__top-middle, .earthquake-warning__top-bottom {
+  display: flex;
+  align-items: flex-start;
+  margin: 1rem 0rem 0rem 0rem;
+  padding-left: 1rem;
+}
+
+.earthquake-warning__top-bottom {
+  margin-top: 0rem;
+  padding-left: 0rem;
+}
+
+.container-subtitle {
+  font-size: 2.75rem;
+  text-align: left;
+}
+
+.earthquake-warning__earthquake-text, .earthquake-warning__time-text {
+  padding-left: 1.25rem;
+  padding-top: 0.75rem;
+  font-size: 1.4rem;
+}
+
+.earthquake-warning__time {
+  padding-left: 2rem;
+  padding-top: 0.75rem;
+  font-size: 1.6rem;
+  text-align: left;
+}
+
+.earthquake-warning__middle {
+  margin: 1.5rem 0rem;
+}
+
+.earthquake-warning__seismic-intensity {
+  margin: 0rem 2rem;
+  padding: 0.15rem 1rem;
+  padding-bottom: 0rem;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.earthquake-warning__seismic-intensity-top, .earthquake-warning__seismic-intensity-bottom, .earthquake-warning__seismic-intensity-right {
+  text-align: center;
+  font-size: 3.5rem;
+}
+
+.earthquake-warning__seismic-intensity-top, .earthquake-warning__seismic-intensity-bottom {
+  padding-left: 1rem;
+}
+
+.earthquake-warning__seismic-intensity-right {
+  font-size: 7rem;
+  padding-left: 2rem;
+}
+
+.earthquake-warning__bottom-top, .earthquake-warning__bottom-middle {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-bottom: 0.5rem;
+}
+
+.earthquake-warning__magnitude-title-text {
+  font-size: 3rem;
+}
+
+.earthquake-warning__depth-title-text {
+  font-size: 2.6rem;
+}
+
+.earthquake-warning__magnitude-text {
+  font-size: 4.5rem;
+  padding-left: 5rem;
+}
+
+.earthquake-warning__depth-text {
+  font-size: 3rem;
+  padding-left: 5rem;
+}
+
+.earthquake-warning__bottom-bottom {
+  margin: 1rem 5rem;
+  margin-top: 0.5rem;
+  padding: 1rem 1rem;
+  border-radius: 50px;
+  background-color: #334768;
+}
+
+.earthquake-warning__note-text {
+  opacity: 75%;
+  font-size: 1.5rem;
+}
+
+.eew-inactive {
+  position: fixed;
+  color: rgb(102, 102, 102);
+  bottom: 4rem;
+  left: 6%;
+  text-align: center;
+  z-index: -1;
+}
+
+#cookie-banner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 3rem;
+  border-color: aqua;
+  border-radius: 10px;
+}
+
+#cookie-banner-button {
+  padding: 1rem 2rem;
+}
+
+@media (min-width: 1100px) {
+  :root {
+    --panel-width: 640px;
+    --panel-height: 100vh;
+    --map-width: 100vw;
+    --map-height: 100vh;
+  } 
+
+  .earthquake-warning__seismic-intensity-top, .earthquake-warning__seismic-intensity-bottom, .earthquake-warning__seismic-intensity-right {
+    font-size: 1.5vw;
+  }
+
+  .earthquake-warning__seismic-intensity-right {
+    font-size: 7rem;
+    padding-left: 2rem;
+  }
+
+  .alert-triangle {
+    width: 1vw;
+    height: 2vh;
+    padding: 0rem 0.5rem;
+  }
+
+  .eew-inactive {
+    top: 4rem;
+  }
+
+}

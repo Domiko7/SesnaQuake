@@ -1,0 +1,15 @@
+{
+  "notification": "{{time}}に、最大震度{{intensity}}、マグニチュード{{mag}}、深さ{{depth}}の地震が発生しました",
+  "eewLocated": "地震は{{location}}で発生しました",
+  "jmaEewReport": "気象庁発表 第{{number}}号、マグニチュード{{mag}}、深さ{{depth}}km、震度{{intensity}}",
+  "reportNumber": "報告番号",
+  "earthquake": "地震",
+  "time": "時刻",
+  "estimated": "推定",
+  "intensity": "最大震度",
+  "mag": "マグニチュード",
+  "depth": "深さ",
+  "eewInactive": "地震の早期警報なし",
+  "cookieText": "当サイトでは解析のためにクッキーを使用しています。閲覧を続けることで同意したものとみなされます。"
+
+}

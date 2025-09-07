@@ -1,0 +1,14 @@
+{
+  "notification": "O godzinie {{time}} wystąpiło trzęsienie ziemi o maksymalnej sile {{intensity}}, magnitudzie {{mag}} i głębokości {{depth}}",
+  "eewLocated": "Trzęsienie ziemi miało miejsce w {{location}}",
+  "jmaEewReport": "Raport Japońskiej Agencji Meteorologicznej {{number}}, magnituda {{mag}}, głębokość {{depth}} km, siła trzęsienia {{intensity}}",
+  "reportNumber": "Numer raportu",
+  "earthquake": "Trzęsienie ziemi",
+  "time": "Czas",
+  "estimated": "Szacowane",
+  "intensity": "Siła trzęsienia ziemi",
+  "mag": "Magnituda",
+  "depth": "Głębokość",
+  "eewInactive": "Brak wczesnych ostrzeżeń przed trzęsieniem ziemi",
+  "cookieText": "Używamy plików cookie do analiz. Kontynuując przeglądanie, wyrażasz zgodę."
+}
