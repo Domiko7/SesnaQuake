@@ -24,8 +24,8 @@ A real-time earthquake alert app made by Domiko
  - [youtube channel](https://www.youtube.com/@DomikoLabs)
 
 --- 
-## features that will be added in the future
--# or features with partial support
+## Upcoming features
+_Features in development or partially supported:_  
  - translation
  - earthquake reports
  - settings
