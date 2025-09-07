@@ -1,5 +1,9 @@
 # SesnaQuake
-A real-time earthquake alert app powered by the Wolfx API.
+A real-time earthquake alert app made by Domiko
+
+<div align="center">
+  <img alt="Discord" src="https://img.shields.io/discord/1334954823598084217">
+</div>
 
 > [!IMPORTANT]  
 > SesnaQuake is currently in **alpha** and may be unstable.
@@ -16,3 +20,16 @@ A real-time earthquake alert app powered by the Wolfx API.
 ## Sources
 - [Wolfx API Documentation](https://wolfx.jp/apidoc_en) – Earthquake early warning data  
 - [NIED Monitoring Stations](https://www.lmoni.bosai.go.jp/monitor/) – Observation data
+
+---
+## my social media
+ - [discord server](https://discord.gg/vnDfPRrRh8)
+ - [youtube channel](https://www.youtube.com/@DomikoLabs)
+
+--- 
+## features that will be added in the future
+-# or features with partial support
+ - translation
+ - earthquake reports
+ - settings
+ - improved ui
