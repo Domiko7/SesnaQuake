@@ -1,4 +1,4 @@
-import { rgb2hsv, getColorPga } from "./utils/color.ts";
+
 import { placeMarker, map } from "./utils/map.ts";
 import type { FeatureCollection, GeoJsonProperties, Point } from "geojson";
 
@@ -16,46 +16,6 @@ interface NiedStation {
   y: number;
   color: NiedColorStation;
 }
-
-const color2postition = (h: number, s: number, v: number) => {
-
-  let p = 0;
-  if (v > 0.1 && s > 0.75) {
-			
-		if (h > 0.1476) {
-			p = 280.31*Math.pow(h,6) - 916.05*Math.pow(h,5) + 1142.6*Math.pow(h,4) - 709.95*Math.pow(h,3) + 234.65*Math.pow(h,2) - 40.27*h + 3.2217;
-		}
-			
-		if (h <= 0.1476 && h > 0.001) {
-			p = 151.4*Math.pow(h,4) -49.32*Math.pow(h,3) + 6.753*Math.pow(h,2) -2.481*h + 0.9033;
-		}
-			
-		if (h <= 0.001) {
-			p = -0.005171*Math.pow(v,2) - 0.3282*v + 1.2236;
-		}
-	}
-
-  if ((p ?? 0) < 0) {
-    p = 0;
-  }
-
-  return p;
-
-};
-
-const position2number = (p: number, unit: string) => {
-  switch (unit) {
-    case "intensity":
-      return (10 * p) - 3;
-    case "pga":
-      return 10 * ((5 * p) - 2);
-    case "pgv":
-      return 10 * ((5 * p) - 3);
-    case "pgd":
-      return 10 * ((5 * p) - 4);
-  }
-  return p;
-};
 
 const addNiedStations = async () => {
   const reference = "other/niedStationsReference.json";
@@ -108,15 +68,6 @@ const updateNiedStations = async (): Promise<NiedStation[] | undefined> => {
 
   try {
     const stations: NiedStation[] = (await response.json()) as NiedStation[];
-
-    //stations.forEach((stn: NiedStation) => {
-      //const { lon, lat, name, x, y, color: NiedColorStation} = stn;
-      //console.log(lon, lat, name, x, y, stn.color);
-      //const hsvColor = rgb2hsv(stn.color.r, stn.color.g, stn.color.b);
-      //const position = color2postition(hsvColor[0] / 360, hsvColor[1] / 100, hsvColor[2] / 100);
-      //const pga = position2number(position, "pga");
-      //const pgaColor = getColorPga(pga);
-    //});
 
     const source = map.getSource("stations") as maplibregl.GeoJSONSource;
     const currentGeojson = source._data as FeatureCollection<Point, GeoJsonProperties>;
