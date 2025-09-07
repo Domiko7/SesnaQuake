@@ -4,6 +4,10 @@ Domikoによるリアルタイム地震警報アプリ
 > [!IMPORTANT]  
 > SesnaQuakeは現在**アルファ版**であり、不安定な場合があります。
 
+> [!WARNING]
+> SesnaQuakeは**非常に新しいソフトウェア**であり、多くのバグが含まれている可能性があります。ご利用の際は注意してください。
+
+
 ---
 
 ## 機能
@@ -39,6 +43,10 @@ A real-time earthquake alert app made by Domiko
 
 > [!IMPORTANT]  
 > SesnaQuake is currently in **alpha** and may be unstable.
+
+> [!WARNING]
+> SesnaQuake is **very new** and may contain numerous bugs. Please use with caution and report any issues you encounter.
+
 
 ---
 
