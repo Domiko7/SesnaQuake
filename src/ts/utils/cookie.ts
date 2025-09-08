@@ -14,7 +14,7 @@ export const cookies = () => {
   }
 
   cookieBannerButton.addEventListener("click", function() {
-    cookieBanner.style.display = 'none';
+    cookieBanner.style.display = "none";
 
     if (document.querySelector('script[src*="googletagmanager"]')) {
       return;
@@ -29,7 +29,7 @@ export const cookies = () => {
     window.gtag = function() {
         window.dataLayer.push(arguments);
     };
-    window.gtag('js', new Date());
-    window.gtag('config', 'G-7LTJ46JCWB', { 'anonymize_ip': true });
+    window.gtag("js", new Date());
+    window.gtag("config", "G-7LTJ46JCWB", { "anonymize_ip": true });
   });
 };
