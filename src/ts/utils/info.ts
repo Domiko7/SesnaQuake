@@ -22,6 +22,32 @@ export const setConnection = (el: string, isConnected: boolean) => {
     
 };
 
+export const startFpsCounter = () => {
+    let lastTime = performance.now();
+    let frames = 0;
+    let fps = 0;
+
+    const infoFpsText = document.querySelector<HTMLElement>(".info__fps-text");
+    if (!infoFpsText) return;
+    infoFpsText.style.color = "#077fe9ff";
+
+    const updateFPS = () => {
+        const now = performance.now();
+        frames++;
+
+        if (now - lastTime >= 1000) {
+            fps = frames;
+            frames = 0;
+            lastTime = now;
+            infoFpsText.textContent = fps.toString();
+        }
+
+        requestAnimationFrame(updateFPS);
+    };
+
+    requestAnimationFrame(updateFPS);
+};
+
 export const setInfo = () => {
     setVersion();
 };

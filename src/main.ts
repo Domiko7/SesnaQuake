@@ -9,7 +9,7 @@ import { realtimeStations } from "./ts/stn.ts";
 import i18n from "./ts/i18n.ts";
 import { translatePage } from "./ts/i18n.ts";
 import { cookies } from "./ts/utils/cookie.ts";
-import { setInfo } from './ts/utils/info.ts';
+import { setInfo, startFpsCounter } from './ts/utils/info.ts';
 
 let earthquakeWarningDebug = document.getElementById("earthquake-warning-debug");
 
@@ -19,4 +19,5 @@ document.addEventListener("DOMContentLoaded", () => {
     translatePage();
     cookies();
     setInfo();
+    startFpsCounter();
 });
