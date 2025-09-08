@@ -54,47 +54,68 @@ export interface JmaEewData {
   OriginalText: string;
 }
 
-export let wolfxWebSocket = new WebSocket("wss://ws-api.wolfx.jp/all_eew");
-//export let wolfxWebSocket = new WebSocket("ws://localhost:8760");
 
-wolfxWebSocket.onopen = (e) => {
-  console.log("Connected!");
-  setConnection("info__server-connection-text", true);
-};
+let wolfxWebSocket: WebSocket | null = null;
+let reconnectAttempts = 0;
 
-wolfxWebSocket.onmessage = (e) => {
-  const data = JSON.parse(e.data);
-
-  const isJmaEewData = (data: any): data is JmaEewData => {
-    return data && data.type === "jma_eew";
+export const connectWebsocket = () => {
+  //wolfxWebSocket = new WebSocket("ws://localhost:8760");
+  wolfxWebSocket = new WebSocket("wss://ws-api.wolfx.jp/all_eew");
+  
+  wolfxWebSocket.onopen = (e) => {
+    console.log("Connected!");
+    reconnectAttempts = 0;
+    setConnection("info__server-connection-text", true);
   };
 
-  if (isJmaEewData(data)) {
-    const { type, Title, EventID, Hypocenter, Latitude, Longitude, Magunitude, Depth, OriginTime, AnnouncedTime, MaxIntensity, Serial, WarnArea, isAssumption, isCancel } = data;
-    eew({
-      type: type,
-      title: Title,
-      id: EventID,
-      location: Hypocenter,
-      lat: Latitude,
-      lon: Longitude,
-      mag: Magunitude,
-      depth: Depth,
-      originTime: OriginTime,
-      announcedTime: AnnouncedTime,
-      intensity: MaxIntensity,
-      reportNumber: Serial,
-      warnArea: WarnArea,
-      isPLUM: isAssumption,
-      isCanceled: isCancel,
-    });
-    console.log(data);
-  }
+  wolfxWebSocket.onmessage = (e) => {
+    const data = JSON.parse(e.data);
+
+    const isJmaEewData = (data: any): data is JmaEewData => {
+      return data && data.type === "jma_eew";
+    };
+
+    if (isJmaEewData(data)) {
+      const { type, Title, EventID, Hypocenter, Latitude, Longitude, Magunitude, Depth, OriginTime, AnnouncedTime, MaxIntensity, Serial, WarnArea, isAssumption, isCancel } = data;
+      eew({
+        type: type,
+        title: Title,
+        id: EventID,
+        location: Hypocenter,
+        lat: Latitude,
+        lon: Longitude,
+        mag: Magunitude,
+        depth: Depth,
+        originTime: OriginTime,
+        announcedTime: AnnouncedTime,
+        intensity: MaxIntensity,
+        reportNumber: Serial,
+        warnArea: WarnArea,
+        isPLUM: isAssumption,
+        isCanceled: isCancel,
+      });
+      console.log(data);
+    }
+  };
+
+  wolfxWebSocket.onclose = (e) => {
+    console.log("Disconnected");
+    setConnection("info__server-connection-text", false);
+
+    const timeout = Math.min(10000, 1000 * 2 ** reconnectAttempts);
+    setTimeout(() => {
+      reconnectAttempts++;
+      console.log(`Trying to reconnect... attempt: ${reconnectAttempts}`);
+      connectWebsocket();
+    }, timeout);
+  };
+
+  wolfxWebSocket.onerror = (err) => {
+    console.log("WebSocket error: ", err);
+    wolfxWebSocket?.close();
+  };
+
 };
 
-wolfxWebSocket.onclose = (e) => {
-  console.log("Disconnected");
-  setConnection("info__server-connection-text", false);
-};
 
-export default wolfxWebSocket;
+
