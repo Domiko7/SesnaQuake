@@ -25,14 +25,26 @@
   <body>
     <div id="app">
       <div id="map"></div>
+
+      <div id="cookie-banner">
+        <p id="cookie-banner-text" data-i18n="cookieText"></p>
+        <button id="cookie-banner-button">OK</button>
+      </div>
+
+      <div id="info">
+        <div class="info-block">
+          <p class="info__title">Version:&nbsp;</p>
+          <p class="info__label info__unknown-color info__version-text">Unknown</p>
+        </div>
+        <div class="info-block">
+          <p class="info__title">Wolfx Websocket:&nbsp;</p>
+          <p class="info__label info__server-connection-text">Disconnected</p>
+        </div>
+      </div>
+
       <div class="panel" id="monitor-panel">
 
         <h1 class="eew-inactive" data-i18n="eewInactive"></h1>
-
-        <div id="cookie-banner">
-          <p id="cookie-banner-text" data-i18n="cookieText"></p>
-          <button id="cookie-banner-button">OK</button>
-        </div>
 
         <div class="panel-container earthquake-warning transparent" id="earthquake-warning-debug" style="border-color: #FF6200;">
           <div class="earthquake-warning__top">
@@ -98,6 +110,7 @@
           </div>
         </div>
       </div>
+
       <script type="module" src="/src/main.ts"></script>
     </div>
   </body>

@@ -25,6 +25,7 @@ export const map = new maplibregl.Map({
   zoom: 5,
   maxZoom: 12,
   minZoom: 3,
+  attributionControl: false,
 });
 
 let markers = new Map<string, maplibregl.Marker>();

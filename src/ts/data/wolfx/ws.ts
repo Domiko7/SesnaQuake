@@ -1,5 +1,6 @@
 
 import { eew } from "../../eew";
+import { setConnection } from "../../utils/info";
 
 export interface JmaIssueData {
   Source: string;
@@ -57,7 +58,8 @@ export let wolfxWebSocket = new WebSocket("wss://ws-api.wolfx.jp/all_eew");
 //export let wolfxWebSocket = new WebSocket("ws://localhost:8760");
 
 wolfxWebSocket.onopen = (e) => {
-  console.log('Connected! ');
+  console.log("Connected!");
+  setConnection("info__server-connection-text", true);
 };
 
 wolfxWebSocket.onmessage = (e) => {
@@ -91,7 +93,8 @@ wolfxWebSocket.onmessage = (e) => {
 };
 
 wolfxWebSocket.onclose = (e) => {
-  console.log('Disconnected');
+  console.log("Disconnected");
+  setConnection("info__server-connection-text", false);
 };
 
 export default wolfxWebSocket;

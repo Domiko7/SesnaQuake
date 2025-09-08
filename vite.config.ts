@@ -1,8 +1,12 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
+import { version } from "./package.json"
 
 export default defineConfig({
-  base: '/SesnaQuake/',
+  base: "/SesnaQuake/",
   build: {
-    outDir: 'dist',
+    outDir: "dist",
+  },
+  define : {
+    __APP_VERSION__: JSON.stringify(version),
   },
 });
