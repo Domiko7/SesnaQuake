@@ -1,7 +1,7 @@
 
 import { Wave } from "./utils/wave/wave.ts";
 import { travelTimeIris } from "./utils/wave/taup.ts";
-import { notify } from "./utils/notification.ts";
+//import { notify } from "./utils/notification.ts";
 import { flyZoom, placeMarker, deleteMarker, map } from "./utils/map.ts";
 import { speak, playSound } from "./utils/speaker.ts";
 import { calculateElapsedTimeOfTheWave, parseJMAtime } from "./utils/time.ts";
@@ -155,7 +155,7 @@ export const deleteEEW = (id: string, waveID: string): void => {
 export const eew = (data: EewData) => {
   const { type, title, id, location, lat, lon, mag, depth, originTime, announcedTime, intensity, reportNumber, warnArea, isPLUM, isCanceled} = data;
 
-  notify(intensity,type, mag, depth, originTime, location);
+  //notify(intensity,type, mag, depth, originTime, location);
   flyZoom(lon, lat, 7, 1);
 
   setTimeout(() => {
