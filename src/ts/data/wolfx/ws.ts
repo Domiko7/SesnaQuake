@@ -2,6 +2,18 @@
 import { eew } from "../../eew";
 import { setConnection } from "../../utils/info";
 
+interface HeartbeatPacket {
+  type: string;
+  ver: number;
+  id: string;
+  timestamp: string
+}
+
+interface PongPacket {
+  type: string;
+  timestamp: string;
+}
+
 export interface JmaIssueData {
   Source: string;
   Status: string;
@@ -70,6 +82,14 @@ export const connectWebsocket = () => {
 
   wolfxWebSocket.onmessage = (e) => {
     const data = JSON.parse(e.data);
+
+    const isHeartbeat = (data: any): data is HeartbeatPacket => {
+      return data && data.type === "heartbeat";
+    };
+
+    const isPong = (data: any): data is PongPacket => {
+      return data && data.type === "pong";
+    };
 
     const isJmaEewData = (data: any): data is JmaEewData => {
       return data && data.type === "jma_eew";
