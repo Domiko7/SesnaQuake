@@ -96,5 +96,5 @@ const updateNiedStations = async (): Promise<NiedStation[] | undefined> => {
 export const realtimeStations = () => {
   setInterval(() => {
     updateNiedStations();
-  }, 1000);
+  }, 500);
 };
