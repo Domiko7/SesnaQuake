@@ -83,6 +83,7 @@ export const changeEvent = (mag: number, intensity: string, depth: number, locat
 
   if (event) {
     event.style.borderColor = intensityColor;
+
     if (eventSeismicIntensity) {
       eventSeismicIntensity.style.backgroundColor = intensityColor;
     }
@@ -90,14 +91,27 @@ export const changeEvent = (mag: number, intensity: string, depth: number, locat
     if (eventReportNumber) {
       eventReportNumber.style.backgroundColor = intensityColor;
     }
+    
+    const reportNumEl = event.querySelector(".earthquake-warning__report-num-text");
+    if (reportNumEl) reportNumEl.textContent = `#${reportNumber.toString()}`;
 
-    event.querySelector(".earthquake-warning__report-num-text")!.textContent = `#${reportNumber.toString()}`;
-    event.querySelector(".earthquake-warning__location")!.textContent = location;
-    event.querySelector(".earthquake-warning__time")!.textContent = time;
-    event.querySelector(".earthquake-warning__seismic-intensity-number")!.textContent = intensity;
-    event.querySelector(".earthquake-warning__magnitude-text")!.textContent = mag.toString();
-    event.querySelector(".earthquake-warning__depth-text")!.textContent = `${depth.toString()}km`;
-    event.querySelector(".earthquake-warning__note-text")!.textContent = `JMA - ${title}`;
+    const locationEl = event.querySelector(".earthquake-warning__location");
+    if (locationEl) locationEl.textContent = location;
+
+    const timeEl = event.querySelector(".earthquake-warning__time");
+    if (timeEl) timeEl.textContent = time;
+
+    const intensityEl = event.querySelector(".earthquake-warning__seismic-intensity-number");
+    if (intensityEl) intensityEl.textContent = intensity;
+
+    const magEl = event.querySelector(".earthquake-warning__magnitude-text");
+    if (magEl) magEl.textContent = mag.toString();
+
+    const depthEl = event.querySelector(".earthquake-warning__depth-text");
+    if (depthEl) depthEl.textContent = `${depth.toString()}km`;
+
+    const noteEl = event.querySelector(".earthquake-warning__note-text");
+    if (noteEl) noteEl.textContent = `JMA - ${title}`;
   }
 
 };

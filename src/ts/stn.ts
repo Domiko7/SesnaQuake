@@ -75,13 +75,13 @@ const updateNiedStations = async (): Promise<NiedStation[] | undefined> => {
     currentGeojson.features.forEach(f => {
       const target = f.properties?.name;
       const stn = stations.find(stn => stn.name === target);
-      if (stn) {
+      if (stn && f.properties) {
         const stationRgb: NiedColorStation = stn?.color;
         if (stationRgb.r !== 0 || stationRgb.g !== 0 || stationRgb.b !== 0 ) {
-          f.properties!.opacity = 1;
-          f.properties!.color = `rgb(${stationRgb.r}, ${stationRgb.g}, ${stationRgb.b})`; // TODO MAKE IT APPEAR AFTER
+          f.properties.opacity = 1;
+          f.properties.color = `rgb(${stationRgb.r}, ${stationRgb.g}, ${stationRgb.b})`; // TODO MAKE IT APPEAR AFTER
         } else {
-          f.properties!.opacity = 0;
+          f.properties.opacity = 0;
         }
       }
     });
