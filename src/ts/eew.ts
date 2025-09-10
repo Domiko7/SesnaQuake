@@ -162,10 +162,6 @@ export const eew = (data: EewData) => {
     flyZoom(lon, lat, 6, 0.75);
   }, 40000);
 
-  setTimeout(() => {
-    flyZoom(lon, lat, 5.5, 0.75);
-  }, 70000);
-
   if (!earthquakes.has(id)) {
     addEEW(data);
   } else {
