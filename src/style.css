@@ -226,7 +226,7 @@ html, body {
   padding: 3rem;
   border-color: aqua;
   border-radius: 10px;
-  z-index: 10;
+  z-index: 100;
 }
 
 #cookie-banner-button {

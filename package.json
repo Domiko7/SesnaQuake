@@ -1,7 +1,7 @@
 {
   "name": "sesnaquake",
   "private": true,
-  "version": "0.0.2-build.4",
+  "version": "0.0.2-build.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
