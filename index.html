@@ -21,8 +21,8 @@
     <meta name="twitter:image" content="./images/SesnaQuake.png">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/SesnaQuake/assets/index-DQYFJCtY.js"></script>
-    <link rel="stylesheet" crossorigin href="/SesnaQuake/assets/index-DO96RgE4.css">
+    <script type="module" crossorigin src="/SesnaQuake/assets/index-BJVSPu5S.js"></script>
+    <link rel="stylesheet" crossorigin href="/SesnaQuake/assets/index-YS-icQN4.css">
   </head>
   <body>
     <div id="app">
@@ -56,10 +56,41 @@
         <span id="time">----/--/-- --:--:--</span>
       </div>
 
-      <div class="panel" id="monitor-panel">
+      <div id="realtime-info">
+        <div id="event-panel">
+          <div class="event-panel__header">
+            <span class="event-panel__title" data-i18n="eewInactive"></span>
+            <span class="event-panel__report-label transparent" data-i18n="reportNumber"></span>
+            <span class="event-panel__report-value transparent">&nbsp;#15</span>
+          </div>
+          <div class="event-panel__content transparent">
+            <div class="event-panel__intensity">
+              <span class="event-panel__seismic-intensity-label" data-i18n="intensity">Seismic intensity</span>
+              <span class="event-panel__seismic-intensity-value">3</span>
+            </div>
+            <div class="event-panel__details">
+              <span class="event-panel__location">Seas near Tokara Islands</span>
+              <span class="event-panel__time">2025/09/27 19:56:12</span>
+              <div class="event-panel__info">
+                <span class="event-panel__magnitude">M5.1</span>
+                <span class="event-panel__depth">10km</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="realtime-int">
+          <span class="realtime-int__label">
+            Max. acc. (est.)
+          </span>
+          <span class="realtime-int__value">
+            0.0 PGA
+          </span>
+        </div>
+        <img src="/SesnaQuake/images/hybrid_int_scale.png" alt="realtime int" class="stn-int-scale">
+      </div>
 
-        <h1 class="eew-inactive" data-i18n="eewInactive"></h1>
-
+      <div id="past-earthquakes-panel">
+        
       </div>
 
     </div>
