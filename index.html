@@ -21,8 +21,8 @@
     <meta name="twitter:image" content="./images/SesnaQuake.png">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/SesnaQuake/assets/index-CxFubWEs.js"></script>
-    <link rel="stylesheet" crossorigin href="/SesnaQuake/assets/index-Crk8P5ai.css">
+    <script type="module" crossorigin src="/SesnaQuake/assets/index-c6exr7wh.js"></script>
+    <link rel="stylesheet" crossorigin href="/SesnaQuake/assets/index-BC9V8Wzy.css">
   </head>
   <body>
     <div id="app">
@@ -33,22 +33,22 @@
         <button id="cookie-banner-button">OK</button>
       </div>
 
-      <div id="info">
-        <div class="info-block">
-          <p class="info__title">FPS:&nbsp;</p>
-          <p class="info__label info__unknown-color info__fps-text">Unknown</p>
+      <div id="debug-info">
+        <div class="debug-info-block">
+          <p class="debug-info__title">FPS:&nbsp;</p>
+          <p class="debug-info__label debug-info__unknown-color debug-info__fps-text">Unknown</p>
         </div>
-        <div class="info-block">
-          <p class="info__title">Version:&nbsp;</p>
-          <p class="info__label info__unknown-color info__version-text">Unknown</p>
+        <div class="debug-info-block">
+          <p class="debug-info__title">Version:&nbsp;</p>
+          <p class="debug-info__label debug-info__unknown-color debug-info__version-text">Unknown</p>
         </div>
-        <div class="info-block">
-          <p class="info__title">Exptech eew latency:&nbsp;</p>
-          <p class="info__label info__unknown-color info__exptech_eew_latency-text">Unknown</p>
+        <div class="debug-info-block">
+          <p class="debug-info__title">Exptech eew latency:&nbsp;</p>
+          <p class="debug-info__label debug-info__unknown-color debug-info__exptech_eew_latency-text">Unknown</p>
         </div>
-        <div class="info-block">
-          <p class="info__title">Wolfx Websocket:&nbsp;</p>
-          <p class="info__label info__server-connection-text">Disconnected</p>
+        <div class="debug-info-block">
+          <p class="debug-info__title">Wolfx Websocket:&nbsp;</p>
+          <p class="debug-info__label debug-info__server-connection-text">Disconnected</p>
         </div>
       </div>
 
@@ -89,8 +89,25 @@
         <img src="/SesnaQuake/images/hybrid_int_scale.png" alt="realtime int" class="stn-int-scale">
       </div>
 
-      <div id="past-earthquakes-panel">
-        
+      <div id="info">
+        <div id="info-panel">
+          <div class="past-events">
+
+            <div class="past-event jma-past-event">
+              <div class="past-event__intensity">
+                <span class="past-event__seismic-intensity-value">3</span>
+              </div>
+
+              <div class="past-event__details">
+                <span class="past-event__location">Seas near Tokara Islands</span>
+                <span class="past-event__time">2025/09/27 19:56:12</span>
+              </div>
+
+              <span class="past-event__magnitude">M5.1</span>
+            </div>
+
+          </div>
+        </div>
       </div>
 
     </div>
