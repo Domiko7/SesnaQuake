@@ -1,0 +1,7 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+	<style>
+		.s0 { fill: #ff00ff } 
+	</style>
+	<path id="Background" fill-rule="evenodd" class="s0" d="m220 19v362h-42v-362z"/>
+	<path id="Layer 1" fill-rule="evenodd" class="s0" d="m19 184h362v42h-362z"/>
+</svg>

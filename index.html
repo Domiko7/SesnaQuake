@@ -21,8 +21,10 @@
     <meta name="twitter:image" content="https://cdn.domiko.dev/images/SesnaQuake.png">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./assets/index-5uK5tGgH.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Bp06fUYI.css">
+
+    <script data-goatcounter="https://sesnaquake.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="./assets/index-CjH7J6M5.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Dmf653Uv.css">
   </head>
   <body>
     <div id="app">
@@ -30,7 +32,25 @@
 
       <div id="cookie-banner">
         <p id="cookie-banner-text" data-i18n="cookieText"></p>
-        <button id="cookie-banner-button">OK</button>
+        <button id="cookie-banner-btn" class="btn--primary" class="btn">OK</button>
+      </div>
+
+      <div id="settings-banner" class="invisible" role="dialog" aria-modal="true" aria-labelledby="settings-banner__title">
+        <div class="settings-modal">
+          <header class="settings-modal__header">
+            <h2 id="settings-banner__title" data-i18n="settingsTitle">Settings</h2>
+            <button id="settings-banner__close-btn" class="settings-modal__close" type="button" aria-label="Close">
+              <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </button>
+          </header>
+          <div class="settings-modal__body" id="settings-modal__body">
+            <!-- Sections and fields are rendered from src/ts/utils/settingsSchema.ts -->
+          </div>
+          <footer class="settings-modal__footer">
+            <span class="settings-modal__note" data-i18n="settingsReloadNote">Saving reloads the app</span>
+            <button id="settings-banner__save-btn" class="btn--primary" data-i18n="save">Save</button>
+          </footer>
+        </div>
       </div>
 
       <div id="debug-info">
@@ -44,14 +64,18 @@
         </div>
         <div class="debug-info-block">
           <p class="debug-info__title">Server:</p>
-          <p class="debug-info__label debug-info__server-connection-text debug-info__server-connection-wolfx">wolfx</p>
-          <p class="debug-info__label debug-info__server-connection-text debug-info__server-connection-p2p">P2P</p>
-          <p class="debug-info__label debug-info__server-connection-text debug-info__server-connection-dmdata">dmdata.jp</p>
+          <p class="debug-info__label debug-info__server-connection-text">Disconnected</p>
         </div>
       </div>
 
-      <div id="clock">
-        <span id="time">----/--/-- --:--:--</span>
+      <div class="elements">
+        <div id="clock">
+          <span id="time">----/--/-- --:--:--</span>
+        </div>
+
+        <button id="settings-btn">
+          <img class="settings-btn-img" src="./images/settings.svg" alt="">
+        </button>
       </div>
 
       <div id="realtime-info">
@@ -59,7 +83,7 @@
           <div class="event-panel__header">
             <span class="event-panel__title" data-i18n="eewInactive"></span>
             <span class="event-panel__report-label transparent" data-i18n="reportNumber"></span>
-            <span class="event-panel__report-value transparent">&nbsp;#15</span>
+            <span class="event-panel__report-value transparent">#15</span>
           </div>
           <div class="event-panel__content transparent">
             <div class="event-panel__intensity">
@@ -76,32 +100,11 @@
             </div>
           </div>
         </div>
-        <div class="realtime-int">
-          <span class="realtime-int__label">
-            Max. acc. (est.)
-          </span>
-          <span class="realtime-int__value">
-            0.0 PGA
-          </span>
-        </div>
       </div>
 
       <div id="info">
         <div id="info-panel">
           <div class="past-events">
-
-            <div class="past-event jma-past-event">
-              <div class="past-event__intensity">
-                <span class="past-event__seismic-intensity-value">3</span>
-              </div>
-
-              <div class="past-event__details">
-                <span class="past-event__location">Seas near Tokara Islands</span>
-                <span class="past-event__time">2025/09/27 19:56:12</span>
-              </div>
-
-              <span class="past-event__magnitude">M5.1</span>
-            </div>
 
           </div>
         </div>
