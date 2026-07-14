@@ -1,0 +1,30 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capability for the main window",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "notification:default",
+    "autostart:default",
+    "store:default",
+    {
+      "identifier": "http:default",
+      "allow": [
+        { "url": "https://api.wolfx.jp/*" },
+        { "url": "https://lb-1.exptech.dev/*" },
+        { "url": "http://www.kmoni.bosai.go.jp/*" },
+        { "url": "https://www.data.jma.go.jp/*" },
+        { "url": "https://www.seismicportal.eu/*" },
+        { "url": "https://palert.earth.sinica.edu.tw/*" },
+        { "url": "https://earthquake.usgs.gov/*" },
+        { "url": "https://api.geonet.org.nz/*" },
+        { "url": "https://squad-snaking-registry.ngrok-free.dev/*" },
+        { "url": "https://api.elevenlabs.io/*" },
+        { "url": "https://*.tts.speech.microsoft.com/*" },
+        { "url": "https://api.openai.com/*" },
+        { "url": "https://api.github.com/*" }
+      ]
+    }
+  ]
+}

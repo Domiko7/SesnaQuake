@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "SesnaQuake",
+  "version": "0.3.0-pre.1+build.1",
+  "identifier": "dev.domiko.sesnaquake",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "SesnaQuake",
+        "width": 1280,
+        "height": 800
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; connect-src 'self' ipc: http://ipc.localhost wss://ws-api.wolfx.jp wss://ws.fanstudio.tech wss://eew.yacineboussoufa.it.eu.org https://tiles.maps.eox.at https://api.elevenlabs.io https://*.tts.speech.microsoft.com https://api.openai.com https://api.github.com https://sesnaquake.goatcounter.com; img-src 'self' data: blob: https://tiles.maps.eox.at https://sesnaquake.goatcounter.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' https://gc.zgo.at; worker-src 'self' blob:; child-src 'self' blob:; media-src 'self' blob:"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}
