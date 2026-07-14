@@ -45,6 +45,7 @@ jobs:
         run: npm ci
 
       - uses: tauri-apps/tauri-action@v0
+        id: tauri
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -52,5 +53,22 @@ jobs:
           releaseName: 'SesnaQuake ${{ github.ref_name }}'
           releaseBody: 'See the assets below to download this version.'
           releaseDraft: true
-          prerelease: false
+          prerelease: ${{ contains(github.ref_name, '-') }}
           args: ${{ matrix.args }}
+
+      - name: Prepare portable Windows binary
+        if: matrix.platform == 'windows-latest'
+        shell: bash
+        run: |
+          mkdir -p dist-portable
+          cp src-tauri/target/release/sesnaquake.exe dist-portable/SesnaQuake-portable.exe
+
+      - name: Upload portable Windows binary
+        if: matrix.platform == 'windows-latest'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist-portable/SesnaQuake-portable.exe
+          tag_name: ${{ github.ref_name }}
+          draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

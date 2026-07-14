@@ -3582,7 +3582,7 @@ dependencies = [
 
 [[package]]
 name = "sesnaquake"
-version = "0.3.0"
+version = "0.3.0-pre.1+build.1"
 dependencies = [
  "reqwest 0.13.4",
  "serde",
