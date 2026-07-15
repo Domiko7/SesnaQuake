@@ -28,14 +28,6 @@ const boundsForRadius = (lat: number, lon: number, radiusKm: number): [[number, 
   return [[lon - lonDelta, lat - latDelta], [lon + lonDelta, lat + latDelta]];
 };
 
-const unionBounds = (
-  a: [[number, number], [number, number]],
-  b: [[number, number], [number, number]],
-): [[number, number], [number, number]] => [
-  [Math.min(a[0][0], b[0][0]), Math.min(a[0][1], b[0][1])],
-  [Math.max(a[1][0], b[1][0]), Math.max(a[1][1], b[1][1])],
-];
-
 function App() {
   const mapReady = useAppStore((s) => s.mapReady);
   const hasActiveEew = useAppStore((s) => s.activeEewId !== null);
@@ -70,18 +62,14 @@ function App() {
   useEffect(() => {
     if (!mapReady) return;
     if (display) {
-      if (display.isEew) {
-        flyZoom(display.lon, display.lat, 7, 1);
+      const litBounds = getShakemapBounds(display.intensity.type);
+      const maxZoom = display.source && WIDE_ZOOM_SOURCES.has(display.source) ? 5 : 7;
+      if (litBounds) {
+        flyToBounds(litBounds, 1, maxZoom);
       } else {
-        const litBounds = getShakemapBounds(display.intensity.type);
-        if (litBounds) {
-          const radiusKm = estimateFeltRadiusKm(display.mag, display.depth, display.intensity.type);
-          const radiusBounds = boundsForRadius(display.lat, display.lon, radiusKm);
-          const maxZoom = display.source && WIDE_ZOOM_SOURCES.has(display.source) ? 6 : 8.5;
-          flyToBounds(unionBounds(litBounds, radiusBounds), 1, maxZoom);
-        } else {
-          flyZoom(display.lon, display.lat, 5.5, 1);
-        }
+        const radiusKm = estimateFeltRadiusKm(display.mag, display.depth, display.intensity.type);
+        const radiusBounds = boundsForRadius(display.lat, display.lon, radiusKm);
+        flyToBounds(radiusBounds, 1, maxZoom);
       }
     } else {
       flyZoom(getHomeLon(), getHomeLat(), 5, 1);

@@ -100,12 +100,20 @@ export const flyZoom = (lon: number, lat: number, zoom: number, duration: number
   });
 };
 
-export const flyToBounds = (bounds: [[number, number], [number, number]], duration: number, maxZoom = 8.5): void => {
-  getMap().fitBounds(bounds, {
-    padding: 40,
+export const flyToBounds = (bounds: [[number, number], [number, number]], duration: number, maxZoom = 8.5, minZoom = 4): void => {
+  const map = getMap();
+  const camera = map.cameraForBounds(bounds, { padding: 40, maxZoom });
+
+  if (!camera?.center || camera.zoom === undefined) {
+    map.fitBounds(bounds, { padding: 40, essential: true, duration: duration * 1000, maxZoom });
+    return;
+  }
+
+  map.flyTo({
+    center: camera.center,
+    zoom: Math.max(camera.zoom, minZoom),
     essential: true,
     duration: duration * 1000,
-    maxZoom,
   });
 };
 

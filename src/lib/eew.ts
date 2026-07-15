@@ -67,8 +67,6 @@ const startSwitching = () => {
 const addEEW = (data: EewPacket): void => {
   const { agency, id, location, lat, lon, mag, depth, originTime, announcedTime, intensity } = data.data;
 
-  flyZoom(lon, lat, 7, 0.5);
-
   const soundSettings = getSettings();
   if (intensity.number >= 3 && soundSettings.soundEew2Enabled) playSound(eew2Sound);
   if (intensity.number >= 5 && soundSettings.soundEew5Enabled) playSound(eew5Sound);
@@ -103,8 +101,6 @@ const updateEEW = (data: EewPacket): void => {
   const internal = internals.get(id);
   const prevData = useAppStore.getState().eews.get(id);
   let shouldAnnounce = true;
-
-  flyZoom(lon, lat, 7, 1);
 
   if (internal && prevData) {
     shouldAnnounce =
@@ -152,9 +148,7 @@ export const deleteEEW = (id: string): void => {
 };
 
 export const eew = (data: EewPacket) => {
-  const { lat, lon, id } = data.data;
-
-  setTimeout(() => flyZoom(lon, lat, 6, 0.75), 40000);
+  const { id } = data.data;
 
   if (!internals.has(id)) {
     addEEW(data);
