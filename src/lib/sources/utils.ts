@@ -1,5 +1,6 @@
 import { point, distance, booleanPointInPolygon, nearestPointOnLine, polygonToLine, simplify, lineString } from "@turf/turf";
-import { estimateShindo, estimateCsis, estimateMmi, estimateCwaShindo } from "../shakemap";
+import { estimateShindo, estimateCsis, estimateMmi, estimateCwaShindo, estimateGeonetMmi } from "../shakemap";
+import { getSettings } from "../settings";
 import type {
   Feature,
   FeatureCollection,
@@ -197,4 +198,37 @@ export const estimateMaxCwaShindo = async (
 ): Promise<number> => {
   const epiDistKm = await epicentralLandDistanceKm(lat, lon);
   return estimateCwaShindo(mag, depth ?? 0, epiDistKm);
+};
+
+export const estimateMaxGeonetMmi = async (
+  mag: number,
+  depth: number,
+  lat: number,
+  lon: number,
+): Promise<number> => {
+  const epiDistKm = await epicentralLandDistanceKm(lat, lon);
+  return estimateGeonetMmi(mag, depth ?? 0, epiDistKm);
+};
+
+export type IntensityType = "mmi" | "shindo" | "csis" | "cwasis" | "geonet_mmi";
+
+const FORCED_INTENSITY_ESTIMATORS: Record<Exclude<IntensityType, never>, typeof estimateMaxMMI> = {
+  mmi: estimateMaxMMI,
+  shindo: estimateMaxShindo,
+  csis: estimateMaxCsis,
+  cwasis: estimateMaxCwaShindo,
+  geonet_mmi: estimateMaxGeonetMmi,
+};
+
+export const resolveIntensity = async <N extends number | null>(
+  number: N,
+  type: IntensityType,
+  mag: number,
+  depth: number | null | undefined,
+  lat: number | null | undefined,
+  lon: number | null | undefined,
+): Promise<{ number: N | number; type: IntensityType }> => {
+  const force = getSettings().forceIntensity;
+  if (force === "off" || force === type) return { number, type };
+  return { number: await FORCED_INTENSITY_ESTIMATORS[force](mag, depth ?? 0, lat ?? 0, lon ?? 0), type: force };
 };

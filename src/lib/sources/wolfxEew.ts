@@ -1,5 +1,5 @@
 import { dispatchMessage } from "./dispatch";
-import { estimateMaxCsis, parseUtcDateTime, shindoToIntensity } from "./utils";
+import { estimateMaxCsis, parseUtcDateTime, shindoToIntensity, resolveIntensity } from "./utils";
 import { getSettings } from "../settings";
 import { useAppStore } from "../../store";
 import type { EewData } from "../wsTypes";
@@ -40,17 +40,14 @@ const handleMessage = async (e: MessageEvent) => {
           reportNumber: data.Serial,
           mag: data.Magunitude,
           depth: data.Depth,
-          intensity: {
-            number: shindoToIntensity[data.MaxIntensity],
-            type: "shindo",
-          },
+          intensity: await resolveIntensity(shindoToIntensity[data.MaxIntensity], "shindo", data.Magunitude, data.Depth, data.Latitude, data.Longitude),
           location: data.Hypocenter,
           announcedTime: parseUtcDateTime(data.AnnouncedTime),
           originTime: parseUtcDateTime(data.OriginTime),
           lat: data.Latitude,
           lon: data.Longitude,
           isAssumption: data.isAssumption,
-        },
+        } as unknown as EewData,
       });
     } else if (data.type === "sc_eew") {
       if (!getSettings().sourceWolfxSc) return;
@@ -63,10 +60,7 @@ const handleMessage = async (e: MessageEvent) => {
           reportNumber: data.ReportNum,
           mag: data.Magunitude,
           depth: data.Depth,
-          intensity: {
-            number: Math.round(data.MaxIntensity),
-            type: "csis",
-          },
+          intensity: await resolveIntensity(Math.round(data.MaxIntensity), "csis", data.Magunitude, data.Depth, data.Latitude, data.Longitude),
           location: data.HypoCenter,
           announcedTime: parseUtcDateTime(data.ReportTime),
           originTime: parseUtcDateTime(data.OriginTime),
@@ -86,10 +80,7 @@ const handleMessage = async (e: MessageEvent) => {
           reportNumber: data.ReportNum,
           mag: data.Magnitude,
           depth: data.Depth,
-          intensity: {
-            number: Math.round(data.MaxIntensity),
-            type: "csis",
-          },
+          intensity: await resolveIntensity(Math.round(data.MaxIntensity), "csis", data.Magnitude, data.Depth, data.Latitude, data.Longitude),
           location: data.HypoCenter,
           announcedTime: parseUtcDateTime(data.ReportTime),
           originTime: parseUtcDateTime(data.OriginTime),
@@ -110,10 +101,7 @@ const handleMessage = async (e: MessageEvent) => {
           reportNumber: data.ReportNum,
           mag: data.Magunitude,
           depth: null,
-          intensity: {
-            number: estimated,
-            type: "csis",
-          },
+          intensity: await resolveIntensity(estimated, "csis", data.Magunitude, 10, data.Latitude, data.Longitude),
           location: data.HypoCenter,
           announcedTime: parseUtcDateTime(data.ReportTime),
           originTime: parseUtcDateTime(data.OriginTime),
@@ -133,10 +121,7 @@ const handleMessage = async (e: MessageEvent) => {
           reportNumber: data.ReportNum,
           mag: data.Magnitude,
           depth: data.Depth,
-          intensity: {
-            number: Math.round(data.MaxIntensity),
-            type: "csis",
-          },
+          intensity: await resolveIntensity(Math.round(data.MaxIntensity), "csis", data.Magnitude, data.Depth, data.Latitude, data.Longitude),
           location: data.HypoCenter,
           announcedTime: parseUtcDateTime(data.ReportTime),
           originTime: parseUtcDateTime(data.OriginTime),

@@ -54,6 +54,9 @@ Additional services:
 - [taup-js](https://www.npmjs.com/package/taup-js) – seismic travel-time model (TauP method) used for wavefront animation
 - [geoBoundaries](https://www.geoboundaries.org/) – administrative boundary polygons used for the shaking-estimation map's MMI, CSIS and CWA regions
 
+**References**
+- Moratalla, Jose M., Goded, Tatiana, Rhoades, D., Canessa, Silvia, & Gerstenberger, Matthew. (2021). New Ground Motion to Intensity Conversion Equations (GMICEs) for New Zealand. *Seismological Research Letters*, 92, 448–459. https://doi.org/10.1785/0220200156 — used for the New Zealand-specific MMI conversion (GeoNet MMI)
+
 ---
 
 ## Development
@@ -137,6 +140,9 @@ Domiko が開発したリアルタイム地震アラートアプリ
 - [taup-js](https://www.npmjs.com/package/taup-js) – 波面アニメーションに使用する地震波走時モデル（TauP法）
 - [geoBoundaries](https://www.geoboundaries.org/) – 揺れ推定マップの MMI・CSIS・CWA 区分で使用する行政境界データ
 
+**参考文献**
+- Moratalla, Jose M., Goded, Tatiana, Rhoades, D., Canessa, Silvia, & Gerstenberger, Matthew. (2021). New Ground Motion to Intensity Conversion Equations (GMICEs) for New Zealand. *Seismological Research Letters*, 92, 448–459. https://doi.org/10.1785/0220200156 — ニュージーランド固有の MMI 変換（GeoNet MMI）に使用
+
 ---
 
 ## 開発
@@ -218,6 +224,9 @@ https://www.apache.org/licenses/LICENSE-2.0
 其他服务：
 - [taup-js](https://www.npmjs.com/package/taup-js) – 用于波前动画的地震波走时模型（TauP 方法）
 - [geoBoundaries](https://www.geoboundaries.org/) – 用于震感估计地图 MMI、CSIS、CWA 区分的行政区划边界数据
+
+**参考文献**
+- Moratalla, Jose M., Goded, Tatiana, Rhoades, D., Canessa, Silvia, & Gerstenberger, Matthew. (2021). New Ground Motion to Intensity Conversion Equations (GMICEs) for New Zealand. *Seismological Research Letters*, 92, 448–459. https://doi.org/10.1785/0220200156 — 用于新西兰专属的 MMI 换算（GeoNet MMI）
 
 ---
 

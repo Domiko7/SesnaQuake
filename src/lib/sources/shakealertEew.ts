@@ -1,5 +1,6 @@
 import { corsFetch } from "./http";
 import { dispatchMessage } from "./dispatch";
+import { resolveIntensity } from "./utils";
 import { useAppStore } from "../../store";
 import type { EewData } from "../wsTypes";
 
@@ -36,6 +37,14 @@ const refreshShakealertEew = async (): Promise<void> => {
     if (isFirstPoll) continue;
 
     const [lon, lat, depth] = feature.geometry.coordinates;
+    const intensity = await resolveIntensity(
+      Math.round(feature.properties.mmi ?? 0),
+      "mmi",
+      feature.properties.mag,
+      depth,
+      lat,
+      lon,
+    );
 
     dispatchMessage({
       type: "eew",
@@ -46,10 +55,7 @@ const refreshShakealertEew = async (): Promise<void> => {
         reportNumber: 1,
         mag: feature.properties.mag,
         depth,
-        intensity: {
-          number: Math.round(feature.properties.mmi ?? 0),
-          type: "mmi",
-        },
+        intensity,
         location: feature.properties.place,
         announcedTime: feature.properties.time,
         originTime: feature.properties.time,

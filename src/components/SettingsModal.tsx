@@ -7,7 +7,7 @@ import type { SettingField, SettingOption } from "../lib/settingsSchema";
 import { getSettings, saveSettings } from "../lib/settings";
 import { testSpeak, playSound } from "../lib/speaker";
 import type { TtsConfig } from "../lib/speaker";
-import { eqSound, updateSound, eew2Sound, eew5Sound, alertSound, resolveAlertStrongSound } from "../lib/sounds";
+import { eqSound, updateSound, eew2Sound, eew5Sound, reportSound, alertSound, resolveAlertStrongSound } from "../lib/sounds";
 
 interface SettingsModalProps {
   open: boolean;
@@ -19,6 +19,7 @@ const SOUND_TEST_SOURCES: Record<string, (language: string) => string> = {
   soundUpdateEnabled: () => updateSound,
   soundEew2Enabled: () => eew2Sound,
   soundEew5Enabled: () => eew5Sound,
+  soundReportEnabled: () => reportSound,
   soundAlertEnabled: () => alertSound,
   soundAlertStrongEnabled: (language) => resolveAlertStrongSound(language),
 };

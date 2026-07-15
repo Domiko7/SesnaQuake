@@ -152,6 +152,9 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         valueType: "number",
         default: "100",
         options: [
+          { value: "40", label: "40%" },
+          { value: "50", label: "50%" },
+          { value: "60", label: "60%" },
           { value: "75", label: "75%" },
           { value: "90", label: "90%" },
           { value: "100", label: "100%" },
@@ -173,8 +176,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
   {
     titleKey: "settingsAlerts",
     fields: [
-      { key: "alertThreshold", labelKey: "settingsAlertThreshold", type: "text", valueType: "number", default: "4", inputMode: "numeric" },
-      { key: "alertStrongThreshold", labelKey: "settingsAlertStrongThreshold", type: "text", valueType: "number", default: "5", inputMode: "numeric" },
+      { key: "alertThreshold", labelKey: "settingsAlertThreshold", type: "text", valueType: "number", default: "2", inputMode: "numeric" },
+      { key: "alertStrongThreshold", labelKey: "settingsAlertStrongThreshold", type: "text", valueType: "number", default: "4", inputMode: "numeric" },
       {
         key: "alertIntensityType",
         labelKey: "settingsAlertIntensityType",
@@ -185,6 +188,25 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "mmi", label: "MMI" },
           { value: "csis", labelKey: "settingsAlertIntensityTypeCsis" },
           { value: "cwasis", labelKey: "settingsAlertIntensityTypeCwasis" }
+        ]
+      }
+    ]
+  },
+  {
+    titleKey: "settingsIntensity",
+    fields: [
+      {
+        key: "forceIntensity",
+        labelKey: "settingsForceIntensity",
+        type: "select",
+        default: "off",
+        options: [
+          { value: "off", labelKey: "settingsForceIntensityOff" },
+          { value: "shindo", label: "Shindo (JMA)" },
+          { value: "mmi", label: "MMI" },
+          { value: "csis", labelKey: "settingsAlertIntensityTypeCsis" },
+          { value: "cwasis", labelKey: "settingsAlertIntensityTypeCwasis" },
+          { value: "geonet_mmi", labelKey: "settingsForceIntensityGeonetMmi" }
         ]
       }
     ]
@@ -228,6 +250,17 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
       {
         key: "soundEew5Enabled",
         labelKey: "settingsSoundEew5",
+        type: "select",
+        valueType: "boolean",
+        default: "on",
+        options: [
+          { value: "on", labelKey: "settingsEnabled" },
+          { value: "off", labelKey: "settingsDisabled" }
+        ]
+      },
+      {
+        key: "soundReportEnabled",
+        labelKey: "settingsSoundReport",
         type: "select",
         valueType: "boolean",
         default: "on",
@@ -658,11 +691,22 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         ]
       },
       {
+        key: "sourceGeonetFeltReports",
+        labelKey: "settingsSourceGeonetFeltReports",
+        type: "select",
+        valueType: "boolean",
+        default: "on",
+        options: [
+          { value: "on", labelKey: "settingsEnabled" },
+          { value: "off", labelKey: "settingsDisabled" }
+        ]
+      },
+      {
         key: "sourceBreq",
         labelKey: "settingsSourceBreq",
         type: "select",
         valueType: "boolean",
-        default: "on",
+        default: "off",
         options: [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
@@ -723,10 +767,12 @@ export interface AppSettings {
   alertThreshold: number;
   alertStrongThreshold: number;
   alertIntensityType: "shindo" | "mmi" | "csis" | "cwasis";
+  forceIntensity: "off" | "shindo" | "mmi" | "csis" | "cwasis" | "geonet_mmi";
   soundEqEnabled: boolean;
   soundUpdateEnabled: boolean;
   soundEew2Enabled: boolean;
   soundEew5Enabled: boolean;
+  soundReportEnabled: boolean;
   soundAlertEnabled: boolean;
   soundAlertStrongEnabled: boolean;
   ttsEnabled: boolean;
@@ -763,6 +809,7 @@ export interface AppSettings {
   sourceBeijing: boolean;
   sourceYunnan: boolean;
   sourceGeonet: boolean;
+  sourceGeonetFeltReports: boolean;
   sourceBreq: boolean;
   sourceKmoni: boolean;
   sourceExptechStn: boolean;

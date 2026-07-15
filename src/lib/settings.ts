@@ -62,6 +62,7 @@ const readLegacyLocalStorage = (): Record<string, string> | null => {
 
 const applyUiZoom = (uiZoom: number): void => {
   document.documentElement.style.zoom = uiZoom !== 100 ? `${uiZoom}%` : "";
+  requestAnimationFrame(() => window.dispatchEvent(new Event("resize")));
 };
 
 export const loadSettings = async (): Promise<void> => {

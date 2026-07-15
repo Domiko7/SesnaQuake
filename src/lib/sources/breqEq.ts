@@ -1,7 +1,7 @@
 import { corsFetch } from "./http";
 import { dispatchMessage } from "./dispatch";
 import { parseQuakeMl } from "./quakeml";
-import { estimateMaxMMI } from "./utils";
+import { estimateMaxMMI, resolveIntensity } from "./utils";
 import { useAppStore } from "../../store";
 import type { EqPacket } from "../wsTypes";
 
@@ -28,6 +28,7 @@ const refreshBreqEq = async (): Promise<string[]> => {
 
       if (isUpdated) {
         const estimatedMMI = await estimateMaxMMI(ev.mag, ev.depthKm, ev.lat, ev.lon);
+        const intensity = await resolveIntensity(estimatedMMI, "mmi", ev.mag, ev.depthKm, ev.lat, ev.lon);
 
         const msg: EqPacket = {
           type: "eq",
@@ -38,10 +39,7 @@ const refreshBreqEq = async (): Promise<string[]> => {
             id: ev.id,
             mag: ev.mag,
             depth: ev.depthKm,
-            intensity: {
-              number: estimatedMMI,
-              type: "mmi",
-            },
+            intensity,
             location: ev.location,
             time: ev.time,
             lat: ev.lat,
@@ -97,5 +95,5 @@ export const startBreqEqSource = (): void => {
     }
   };
   void poll();
-  setInterval(poll, 20000);
+  setInterval(poll, 10000);
 };

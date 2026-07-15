@@ -1,15 +1,17 @@
 import { getMap } from "../map/mapInstance";
 import { getShakemapColor } from "./transform";
+import { getSettings } from "./settings";
 import type { GeoJSONSource } from "maplibre-gl";
 import type { Feature, FeatureCollection, Polygon, MultiPolygon, Position } from "geojson";
 
-type Scale = "shindo" | "mmi" | "csis" | "cwasis";
+type Scale = "shindo" | "mmi" | "csis" | "cwasis" | "geonet_mmi";
 
 interface ShakemapRegion {
   id: number;
   feature: Feature<Polygon | MultiPolygon>;
   rings: Position[][];
   scale: Scale;
+  bbox: [number, number, number, number];
 }
 
 interface EewSource {
@@ -24,6 +26,7 @@ const regionFiles: { url: string; scale: Scale }[] = [
   { url: "geojson/cwasis.geojson", scale: "cwasis" },
   { url: "geojson/mmi.geojson", scale: "mmi" },
   { url: "geojson/csis.geojson", scale: "csis" },
+  { url: "geojson/geonet_mmi.geojson", scale: "geonet_mmi" },
 ];
 
 const regions: ShakemapRegion[] = [];
@@ -48,26 +51,16 @@ export const estimateShindo = (mag: number, depth: number, epiDistKm: number) =>
   return 9;
 };
 
+const CN_GMICE_PGV = { m: 3.2817, b: 3.4163 };
+
 export const estimateCsis = (mag: number, depth: number, epiDistKm: number) => {
   const hypoDistKm = Math.max(Math.sqrt(epiDistKm ** 2 + depth ** 2), 3);
 
   const logPgv = 0.58 * mag + 0.0038 * depth - 1.29 - Math.log10(hypoDistKm + 0.0028 * 10 ** (0.5 * mag)) - 0.002 * hypoDistKm;
   const pgv = 10 ** logPgv * 1.71;
 
-  const csis = 3.33 * Math.log10(pgv) + 4.71;
-
-  if (csis < 1.5) return 0;
-  if (csis < 2.5) return 2;
-  if (csis < 3.5) return 3;
-  if (csis < 4.5) return 4;
-  if (csis < 5.5) return 5;
-  if (csis < 6.5) return 6;
-  if (csis < 7.5) return 7;
-  if (csis < 8.5) return 8;
-  if (csis < 9.5) return 9;
-  if (csis < 10.5) return 10;
-  if (csis < 11.5) return 11;
-  return 12;
+  const csis = CN_GMICE_PGV.m * Math.log10(pgv) + CN_GMICE_PGV.b;
+  return Math.min(12, Math.max(0, Math.round(csis)));
 };
 
 export const estimateCwaShindo = (mag: number, depth: number, epiDistKm: number) => {
@@ -130,33 +123,57 @@ export const estimateMmi = (mag: number, depth: number, epiDistKm: number) => {
   return Math.min(12, Math.max(0, Math.round(mmi)));
 };
 
+const NZ_GMICE_PGV = { a1: 4.107, b1: 1.6323, a2: 1.8970, b2: 3.837, t: 1.0024 };
+
+export const estimateGeonetMmi = (mag: number, depth: number, epiDistKm: number) => {
+  const hypoDistKm = Math.max(Math.sqrt(epiDistKm ** 2 + depth ** 2), 3);
+  const logPgv = 0.58 * mag + 0.0038 * depth - 1.29 - Math.log10(hypoDistKm + 0.0028 * 10 ** (0.5 * mag)) - 0.002 * hypoDistKm;
+  const pgv = 10 ** logPgv * 1.71;
+  const logPgvCms = Math.log10(pgv);
+  const { a1, b1, a2, b2, t } = NZ_GMICE_PGV;
+  const mmi = logPgvCms < t ? b1 * logPgvCms + a1 : b2 * logPgvCms + a2;
+  return Math.min(12, Math.max(0, Math.round(mmi)));
+};
+
+const feltEstimatorByScale: Record<Scale, (mag: number, depth: number, epiDistKm: number) => number> = {
+  shindo: estimateShindo,
+  mmi: estimateMmi,
+  csis: estimateCsis,
+  cwasis: estimateCwaShindo,
+  geonet_mmi: estimateGeonetMmi,
+};
+
+export const estimateFeltRadiusKm = (mag: number, depth: number, scale: string): number => {
+  const estimator = feltEstimatorByScale[scale as Scale] ?? estimateMmi;
+  let lo = 0;
+  let hi = 2000;
+  for (let i = 0; i < 25; i++) {
+    const mid = (lo + hi) / 2;
+    if (estimator(mag, depth, mid) >= 1) lo = mid;
+    else hi = mid;
+  }
+  return lo;
+};
+
+const litBoundsByScale = new Map<Scale, [number, number, number, number]>();
+
 const renderShakemap = () => {
   const map = getMap();
   if (!map.getSource("shakemap")) return;
 
+  litBoundsByScale.clear();
+
+  const force = getSettings().forceIntensity as Scale | "off";
+
   for (const region of regions) {
-    const { id, scale } = region;
+    const { id } = region;
+    const scale: Scale = force !== "off" ? force : region.scale;
+    const estimator = feltEstimatorByScale[scale] ?? estimateMmi;
     let maxIntensity = 0;
 
     for (const eew of activeEews.values()) {
       const epiDistKm = distanceToRegionKm(eew.lon, eew.lat, region);
-      let intensity = 0;
-      switch (scale) {
-        case "shindo":
-          intensity = estimateShindo(eew.mag, eew.depth, epiDistKm);
-          break;
-        case "mmi":
-          intensity = estimateMmi(eew.mag, eew.depth, epiDistKm);
-          break;
-        case "csis":
-          intensity = estimateCsis(eew.mag, eew.depth, epiDistKm);
-          break;
-        case "cwasis":
-          intensity = estimateCwaShindo(eew.mag, eew.depth, epiDistKm);
-          break;
-        default:
-          intensity = 0;
-      }
+      const intensity = estimator(eew.mag, eew.depth, epiDistKm);
       if (intensity > maxIntensity) maxIntensity = intensity;
     }
 
@@ -166,8 +183,36 @@ const renderShakemap = () => {
       if (confirmed !== undefined && confirmed > maxIntensity) maxIntensity = confirmed;
     }
 
+    if (maxIntensity > 0) {
+      const [minLon, minLat, maxLon, maxLat] = region.bbox;
+      const existing = litBoundsByScale.get(scale);
+      litBoundsByScale.set(scale, existing
+        ? [Math.min(existing[0], minLon), Math.min(existing[1], minLat), Math.max(existing[2], maxLon), Math.max(existing[3], maxLat)]
+        : [minLon, minLat, maxLon, maxLat]);
+    }
+
     map.setFeatureState({ source: "shakemap", id }, { color: getShakemapColor(maxIntensity, scale) });
   }
+};
+
+export const getShakemapBounds = (scale: string): [[number, number], [number, number]] | null => {
+  const bounds = litBoundsByScale.get(scale as Scale);
+  if (!bounds) return null;
+  const [minLon, minLat, maxLon, maxLat] = bounds;
+  return [[minLon, minLat], [maxLon, maxLat]];
+};
+
+const boundsOfRings = (rings: Position[][]): [number, number, number, number] => {
+  let minLon = Infinity, minLat = Infinity, maxLon = -Infinity, maxLat = -Infinity;
+  for (const ring of rings) {
+    for (const [lon, lat] of ring) {
+      if (lon < minLon) minLon = lon;
+      if (lat < minLat) minLat = lat;
+      if (lon > maxLon) maxLon = lon;
+      if (lat > maxLat) maxLat = lat;
+    }
+  }
+  return [minLon, minLat, maxLon, maxLat];
 };
 
 let regionsLoaded: Promise<void> | null = null;
@@ -179,9 +224,11 @@ const loadRegions = (): Promise<void> => {
       const geojson = await res.json() as FeatureCollection;
       for (const feature of geojson.features) {
         if (feature.geometry?.type === "Polygon") {
-          regions.push({ id: regions.length, feature: feature as Feature<Polygon>, rings: feature.geometry.coordinates, scale });
+          const rings = feature.geometry.coordinates;
+          regions.push({ id: regions.length, feature: feature as Feature<Polygon>, rings, scale, bbox: boundsOfRings(rings) });
         } else if (feature.geometry?.type === "MultiPolygon") {
-          regions.push({ id: regions.length, feature: feature as Feature<MultiPolygon>, rings: feature.geometry.coordinates.flat(), scale });
+          const rings = feature.geometry.coordinates.flat();
+          regions.push({ id: regions.length, feature: feature as Feature<MultiPolygon>, rings, scale, bbox: boundsOfRings(rings) });
         }
       }
     })).then(() => {});

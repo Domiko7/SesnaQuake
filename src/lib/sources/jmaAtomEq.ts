@@ -1,7 +1,7 @@
 import { XMLParser } from "fast-xml-parser";
 import { corsFetch } from "./http";
 import { dispatchMessage } from "./dispatch";
-import { shindoToIntensity } from "./utils";
+import { shindoToIntensity, resolveIntensity } from "./utils";
 import jmaStations from "./assets/jma_stations.json";
 import { useAppStore } from "../../store";
 import type { EqPacket } from "../wsTypes";
@@ -120,6 +120,15 @@ const refreshJmaAtomEq = async (): Promise<string[]> => {
           return ref && intensity !== undefined ? { lat: ref.lat, lon: ref.lon, intensity } : null;
         })
         .filter((station): station is { lat: number; lon: number; intensity: number } => station !== null);
+      const mag = earthquake["jmx_eb:Magnitude"];
+      const intensity = await resolveIntensity(
+        (maxInt ? shindoToIntensity[maxInt] : undefined) ?? null,
+        "shindo",
+        mag,
+        depth,
+        lat,
+        lon,
+      );
       const msg = {
         type: "eq",
         data: {
@@ -127,12 +136,9 @@ const refreshJmaAtomEq = async (): Promise<string[]> => {
           author: "JMA",
           agency: "JMA",
           id: eventId,
-          mag: earthquake["jmx_eb:Magnitude"],
+          mag,
           depth,
-          intensity: {
-            number: (maxInt ? shindoToIntensity[maxInt] : undefined) ?? null,
-            type: "shindo",
-          },
+          intensity,
           location: earthquake.Hypocenter.Area.Name,
           time: new Date(earthquake.OriginTime ?? updateTime).getTime(),
           lat,
@@ -199,5 +205,5 @@ export const startJmaAtomEqSource = (): void => {
     }
   };
   void poll();
-  setInterval(poll, 20000);
+  setInterval(poll, 10000);
 };

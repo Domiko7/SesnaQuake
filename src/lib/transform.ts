@@ -19,21 +19,13 @@ const getColorShindo = (intensity: number) => {
 };
 
 const getNumericIntensityMMI = (intensity: number) => {
-  const mmiSymbols = ["?", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
-  try {
-    return mmiSymbols[intensity];
-  } catch (err) {
-    return mmiSymbols[0];
-  }
+  const mmiSymbols = ["-", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
+  return mmiSymbols[intensity] ?? "?";
 };
 
 const getNumericIntensityShindo = (intensity: number) => {
-  const shindoSymbols = ["?", "1", "2", "3", "4", "5-", "5+", "6-", "6+", "7"];
-  try {
-    return shindoSymbols[intensity];
-  } catch (err) {
-    return shindoSymbols[0];
-  }
+  const shindoSymbols = ["-", "1", "2", "3", "4", "5-", "5+", "6-", "6+", "7"];
+  return shindoSymbols[intensity] ?? "?";
 };
 
 export const getTextColorMmi = (intensity: number) => {
@@ -55,7 +47,7 @@ export const getTextColorShindo = (intensity: number) => {
 export const getColor = (intensity: number, intensityType: string) => {
   if (intensityType == "shindo" || intensityType == "cwasis") {
     return getColorShindo(intensity);
-  } else if (intensityType == "mmi" || intensityType == "csis") {
+  } else if (intensityType == "mmi" || intensityType == "csis" || intensityType == "geonet_mmi") {
     return getColorMmi(intensity);
   }
   return "#414345";
@@ -64,7 +56,7 @@ export const getColor = (intensity: number, intensityType: string) => {
 export const getTextColor = (intensity: number, intensityType: string) => {
   if (intensityType == "shindo" || intensityType == "cwasis") {
     return getTextColorShindo(intensity);
-  } else if (intensityType == "mmi" || intensityType == "csis") {
+  } else if (intensityType == "mmi" || intensityType == "csis" || intensityType == "geonet_mmi") {
     return getTextColorMmi(intensity);
   }
   return "#ffffff";
@@ -81,7 +73,7 @@ export const getShakemapColor = (intensity: number, intensityType: string) => {
 export const getTextIntensity = (intensity: number, intensityType: string) => {
   if (intensityType == "shindo" || intensityType == "cwasis") {
     return getNumericIntensityShindo(intensity);
-  } else if (intensityType == "mmi" || intensityType == "csis") {
+  } else if (intensityType == "mmi" || intensityType == "csis" || intensityType == "geonet_mmi") {
     return getNumericIntensityMMI(intensity);
   }
   return "?";

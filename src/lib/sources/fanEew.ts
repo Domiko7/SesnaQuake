@@ -1,5 +1,5 @@
 import { dispatchMessage } from "./dispatch";
-import { parseUtcDateTime, parseOffsetDateTime, estimateMaxMMI, estimateMaxCsis, estimateMaxCwaShindo } from "./utils";
+import { parseUtcDateTime, parseOffsetDateTime, estimateMaxMMI, estimateMaxCsis, estimateMaxCwaShindo, resolveIntensity } from "./utils";
 import { getSettings } from "../settings";
 import { useAppStore } from "../../store";
 import type { EewData, EqData } from "../wsTypes";
@@ -31,6 +31,7 @@ const fanEqId = (agency: string, d: FanEqData): string => String(d.id ?? d.event
 const buildGenericEq = async (source: EqData["source"], d: FanEqData): Promise<EqData> => {
   const mag = d.magnitude ?? 0;
   const depth = d.depth ?? 0;
+  const estimatedMMI = await estimateMaxMMI(mag, depth, d.latitude, d.longitude);
   return {
     source,
     author: "fan",
@@ -38,7 +39,7 @@ const buildGenericEq = async (source: EqData["source"], d: FanEqData): Promise<E
     id: fanEqId(source, d),
     mag,
     depth,
-    intensity: { number: await estimateMaxMMI(mag, depth, d.latitude, d.longitude), type: "mmi" },
+    intensity: await resolveIntensity(estimatedMMI, "mmi", mag, depth, d.latitude, d.longitude),
     location: d.placeName ?? "",
     time: parseOffsetDateTime(d.shockTime, 8),
     lat: d.latitude,
@@ -64,6 +65,7 @@ const SIMPLE_EQ_SOURCES: EqData["source"][] = Object.keys(SIMPLE_EQ_SETTING_KEYS
 const buildCencFallback = async (d: FanEqData): Promise<EqData> => {
   const mag = d.magnitude ?? 0;
   const depth = d.depth ?? 0;
+  const estimatedCsis = await estimateMaxCsis(mag, depth, d.latitude, d.longitude);
   return {
     source: "cenc",
     author: "fan",
@@ -71,7 +73,7 @@ const buildCencFallback = async (d: FanEqData): Promise<EqData> => {
     id: fanEqId("cenc", d),
     mag,
     depth,
-    intensity: { number: await estimateMaxCsis(mag, depth, d.latitude, d.longitude), type: "csis" },
+    intensity: await resolveIntensity(estimatedCsis, "csis", mag, depth, d.latitude, d.longitude),
     location: d.placeName ?? "",
     time: parseOffsetDateTime(d.shockTime, 8),
     lat: d.latitude,
@@ -88,37 +90,45 @@ interface FanCwaData extends FanEqData {
   maxIntensity?: string | null;
 }
 
-const buildCwa = (d: FanCwaData): EqData => ({
-  source: "cwa",
-  author: "fan",
-  agency: "cwa",
-  id: fanEqId("cwa", d),
-  mag: d.magnitude ?? 0,
-  depth: d.depth ?? 0,
-  intensity: { number: parseCwaIntensity(d.maxIntensity), type: "cwasis" },
-  location: d.placeName ?? "",
-  time: parseOffsetDateTime(d.shockTime, 8),
-  lat: d.latitude,
-  lon: d.longitude,
-});
+const buildCwa = async (d: FanCwaData): Promise<EqData> => {
+  const mag = d.magnitude ?? 0;
+  const depth = d.depth ?? 0;
+  return {
+    source: "cwa",
+    author: "fan",
+    agency: "cwa",
+    id: fanEqId("cwa", d),
+    mag,
+    depth,
+    intensity: await resolveIntensity(parseCwaIntensity(d.maxIntensity), "cwasis", mag, depth, d.latitude, d.longitude),
+    location: d.placeName ?? "",
+    time: parseOffsetDateTime(d.shockTime, 8),
+    lat: d.latitude,
+    lon: d.longitude,
+  };
+};
 
 interface FanKmaEqData extends FanEqData {
   epiIntensity?: number | string | null;
 }
 
-const buildKma = (d: FanKmaEqData): EqData => ({
-  source: "kma",
-  author: "fan",
-  agency: "kma",
-  id: fanEqId("kma", d),
-  mag: d.magnitude ?? 0,
-  depth: d.depth ?? 0,
-  intensity: { number: Math.round(Number(d.epiIntensity ?? 0)), type: "mmi" },
-  location: d.placeName ?? "",
-  time: parseOffsetDateTime(d.shockTime, 9),
-  lat: d.latitude,
-  lon: d.longitude,
-});
+const buildKma = async (d: FanKmaEqData): Promise<EqData> => {
+  const mag = d.magnitude ?? 0;
+  const depth = d.depth ?? 0;
+  return {
+    source: "kma",
+    author: "fan",
+    agency: "kma",
+    id: fanEqId("kma", d),
+    mag,
+    depth,
+    intensity: await resolveIntensity(Math.round(Number(d.epiIntensity ?? 0)), "mmi", mag, depth, d.latitude, d.longitude),
+    location: d.placeName ?? "",
+    time: parseOffsetDateTime(d.shockTime, 9),
+    lat: d.latitude,
+    lon: d.longitude,
+  };
+};
 
 interface FanCeaData {
   eventId: string;
@@ -132,14 +142,14 @@ interface FanCeaData {
   updates: number;
 }
 
-const buildCeaEewFallback = (d: FanCeaData): EewData => ({
+const buildCeaEewFallback = async (d: FanCeaData): Promise<EewData> => ({
   author: "fan",
   agency: "cenc",
   id: d.eventId,
   reportNumber: d.updates,
   mag: d.magnitude,
   depth: d.depth,
-  intensity: { number: Math.round(d.epiIntensity), type: "csis" },
+  intensity: await resolveIntensity(Math.round(d.epiIntensity), "csis", d.magnitude, d.depth, d.latitude, d.longitude),
   location: d.placeName,
   announcedTime: parseUtcDateTime(d.shockTime),
   originTime: parseUtcDateTime(d.shockTime),
@@ -166,7 +176,7 @@ const buildCwaEewFallback = async (d: FanCwaEewData): Promise<EewData> => ({
   reportNumber: d.updates,
   mag: d.magnitude,
   depth: d.depth,
-  intensity: { number: await estimateMaxCwaShindo(d.magnitude, d.depth, d.latitude, d.longitude), type: "cwasis" },
+  intensity: await resolveIntensity(await estimateMaxCwaShindo(d.magnitude, d.depth, d.latitude, d.longitude), "cwasis", d.magnitude, d.depth, d.latitude, d.longitude),
   location: d.placeName,
   announcedTime: parseUtcDateTime(d.shockTime),
   originTime: parseUtcDateTime(d.shockTime),
@@ -189,14 +199,14 @@ interface FanJmaData {
   cancel?: boolean;
 }
 
-const buildJmaFallback = (d: FanJmaData): EewData => ({
+const buildJmaFallback = async (d: FanJmaData): Promise<EewData> => ({
   author: "fan",
   agency: "jma",
   id: d.id,
   reportNumber: d.updates,
   mag: d.magnitude,
   depth: d.depth,
-  intensity: { number: Math.round(Number(d.epiIntensity)), type: "shindo" },
+  intensity: await resolveIntensity(Math.round(Number(d.epiIntensity)), "shindo", d.magnitude, d.depth, d.latitude, d.longitude),
   location: d.placeName,
   announcedTime: parseUtcDateTime(d.createTime),
   originTime: parseUtcDateTime(d.shockTime),
@@ -222,7 +232,7 @@ const buildSaFallback = async (d: FanSaData): Promise<EewData> => ({
   reportNumber: 1,
   mag: d.magnitude,
   depth: d.depth,
-  intensity: { number: await estimateMaxMMI(d.magnitude, d.depth, d.latitude, d.longitude), type: "mmi" },
+  intensity: await resolveIntensity(await estimateMaxMMI(d.magnitude, d.depth, d.latitude, d.longitude), "mmi", d.magnitude, d.depth, d.latitude, d.longitude),
   location: d.placeName,
   announcedTime: parseUtcDateTime(d.shockTime),
   originTime: parseUtcDateTime(d.shockTime),
@@ -244,14 +254,14 @@ interface FanKmaEewData {
   placeName: string;
 }
 
-const buildKmaEew = (d: FanKmaEewData): EewData => ({
+const buildKmaEew = async (d: FanKmaEewData): Promise<EewData> => ({
   author: "fan",
   agency: "kma",
   id: d.id,
   reportNumber: d.updates,
   mag: d.magnitude,
   depth: d.depth,
-  intensity: { number: Math.round(d.epiIntensity), type: "mmi" },
+  intensity: await resolveIntensity(Math.round(d.epiIntensity), "mmi", d.magnitude, d.depth, d.latitude, d.longitude),
   location: d.placeName,
   announcedTime: parseUtcDateTime(d.createTime),
   originTime: parseUtcDateTime(d.shockTime),
@@ -277,22 +287,22 @@ const handleSourceUpdate = async (source: string, Data: unknown): Promise<void> 
   switch (source) {
     case "cwa":
       if (!getSettings().sourceCwaReport) return;
-      dispatchMessage({ type: "eq", data: buildCwa(d) });
+      dispatchMessage({ type: "eq", data: await buildCwa(d) });
       return;
     case "kma":
       if (!getSettings().sourceKmaReport) return;
-      dispatchMessage({ type: "eq", data: buildKma(d) });
+      dispatchMessage({ type: "eq", data: await buildKma(d) });
       return;
     case "kma-eew":
       if (!getSettings().sourceKmaEew) return;
-      dispatchMessage({ type: "eew", data: buildKmaEew(d) });
+      dispatchMessage({ type: "eew", data: await buildKmaEew(d) });
       return;
     case "cenc":
       if (primaryDown("sourceCenc", "cenc")) dispatchMessage({ type: "eq", data: await buildCencFallback(d) });
       return;
     case "cea":
     case "cea-pr":
-      if (primaryDown("sourceWolfxCenc", "wolfx")) dispatchMessage({ type: "eew", data: buildCeaEewFallback(d) });
+      if (primaryDown("sourceWolfxCenc", "wolfx")) dispatchMessage({ type: "eew", data: await buildCeaEewFallback(d) });
       return;
     case "cwa-eew":
       if (primaryDown("sourceExptechCwa", "exptechEew")) dispatchMessage({ type: "eew", data: await buildCwaEewFallback(d) });
@@ -300,7 +310,7 @@ const handleSourceUpdate = async (source: string, Data: unknown): Promise<void> 
     case "jma":
       if (!primaryDown("sourceWolfxJma", "wolfx")) return;
       if ((d as FanJmaData).cancel) dispatchMessage({ type: "eewCancel", data: { id: (d as FanJmaData).id } });
-      else dispatchMessage({ type: "eew", data: buildJmaFallback(d) });
+      else dispatchMessage({ type: "eew", data: await buildJmaFallback(d) });
       return;
     case "sa":
       if (primaryDown("sourceShakealert", "shakealert")) dispatchMessage({ type: "eew", data: await buildSaFallback(d) });

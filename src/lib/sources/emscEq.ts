@@ -1,6 +1,6 @@
 import { corsFetch } from "./http";
 import { dispatchMessage } from "./dispatch";
-import { estimateMaxMMI } from "./utils";
+import { estimateMaxMMI, resolveIntensity } from "./utils";
 import { useAppStore } from "../../store";
 import type { EqPacket } from "../wsTypes";
 
@@ -37,6 +37,14 @@ const refreshEmscEq = async (): Promise<string[]> => {
           eq.properties.lat,
           eq.properties.lon,
         );
+        const intensity = await resolveIntensity(
+          estimatedMMI,
+          "mmi",
+          eq.properties.mag,
+          eq.properties.depth,
+          eq.properties.lat,
+          eq.properties.lon,
+        );
 
         const msg: EqPacket = {
           type: "eq",
@@ -47,10 +55,7 @@ const refreshEmscEq = async (): Promise<string[]> => {
             id: eq.properties.unid,
             mag: eq.properties.mag,
             depth: eq.properties.depth,
-            intensity: {
-              number: estimatedMMI,
-              type: "mmi",
-            },
+            intensity,
             location: eq.properties.flynn_region,
             time: new Date(eq.properties.time).getTime(),
             lat: eq.properties.lat,
@@ -106,5 +111,5 @@ export const startEmscEqSource = (): void => {
     }
   };
   void poll();
-  setInterval(poll, 20000);
+  setInterval(poll, 10000);
 };

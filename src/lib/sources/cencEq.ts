@@ -1,5 +1,6 @@
 import { corsFetch } from "./http";
 import { dispatchMessage } from "./dispatch";
+import { resolveIntensity } from "./utils";
 import { useAppStore } from "../../store";
 import type { EqPacket, Intensity } from "../wsTypes";
 
@@ -42,7 +43,17 @@ const refreshCencEq = async (): Promise<string[]> => {
       const isUpdated = cencLastUpdates.get(eq.EventID) !== updateKey;
 
       if (isUpdated) {
-        const intensity = Number(eq.intensity);
+        const mag = Number(eq.magnitude);
+        const depth = Number(eq.depth);
+        const rawIntensity = Number(eq.intensity);
+        const intensity = await resolveIntensity(
+          Number.isFinite(rawIntensity) ? rawIntensity : null,
+          "csis",
+          mag,
+          depth,
+          Number(eq.latitude),
+          Number(eq.longitude),
+        );
         const msg: EqPacket = {
           type: "eq",
           data: {
@@ -50,12 +61,9 @@ const refreshCencEq = async (): Promise<string[]> => {
             author: "wolfx",
             agency: "cenc",
             id: eq.EventID,
-            mag: Number(eq.magnitude),
-            depth: Number(eq.depth),
-            intensity: {
-              number: Number.isFinite(intensity) ? intensity : null,
-              type: "csis",
-            } as Intensity,
+            mag,
+            depth,
+            intensity: intensity as Intensity,
             location: eq.placeName,
             time: new Date(`${eq.time.replace(" ", "T")}+08:00`).getTime(),
             lat: Number(eq.latitude),
@@ -111,5 +119,5 @@ export const startCencEqSource = (): void => {
     }
   };
   void poll();
-  setInterval(poll, 20000);
+  setInterval(poll, 10000);
 };

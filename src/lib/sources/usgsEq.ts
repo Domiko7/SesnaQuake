@@ -1,6 +1,6 @@
 import { corsFetch } from "./http";
 import { dispatchMessage } from "./dispatch";
-import { estimateMaxMMI } from "./utils";
+import { estimateMaxMMI, resolveIntensity } from "./utils";
 import { useAppStore } from "../../store";
 import type { EqPacket } from "../wsTypes";
 
@@ -42,7 +42,8 @@ const refreshUsgsEq = async (): Promise<string[]> => {
       const [lon, lat, rawDepth] = feature.geometry.coordinates;
       const mag = Number((feature.properties.mag ?? 0).toFixed(1));
       const depth = Number(rawDepth.toFixed(1));
-      const intensity = feature.properties.mmi ?? await estimateMaxMMI(mag, depth, lat, lon);
+      const mmi = feature.properties.mmi ?? await estimateMaxMMI(mag, depth, lat, lon);
+      const intensity = await resolveIntensity(Math.round(mmi), "mmi", mag, depth, lat, lon);
 
       const msg: EqPacket = {
         type: "eq",
@@ -53,10 +54,7 @@ const refreshUsgsEq = async (): Promise<string[]> => {
           id: feature.id,
           mag,
           depth,
-          intensity: {
-            number: Math.round(intensity),
-            type: "mmi",
-          },
+          intensity,
           location: feature.properties.place ?? "",
           time: feature.properties.time,
           lat,
@@ -111,5 +109,5 @@ export const startUsgsEqSource = (): void => {
     }
   };
   void poll();
-  setInterval(poll, 20000);
+  setInterval(poll, 10000);
 };

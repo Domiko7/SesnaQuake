@@ -1,0 +1,28 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+	<defs>
+		<radialGradient id="g1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(200,0,0,200,200,200)">
+			<stop offset="0" stop-color="#686870" stop-opacity="1"/>
+			<stop offset=".4" stop-color="#686870" stop-opacity="1"/>
+			<stop offset=".55" stop-color="#686870" stop-opacity=".56"/>
+			<stop offset=".7" stop-color="#686870" stop-opacity=".25"/>
+			<stop offset=".85" stop-color="#686870" stop-opacity=".06"/>
+			<stop offset="1" stop-color="#686870" stop-opacity="0"/>
+		</radialGradient>
+	</defs>
+	<style>
+		.s0 { fill: none } 
+		.s1 { opacity: .12;fill: url(#g1) } 
+		.s2 { fill: #686870;stroke: #525257;stroke-miterlimit:10;stroke-width: 13 } 
+		.s3 { fill: #ffffff } 
+	</style>
+	<g>
+		<g>
+			<g>
+				<path class="s0" d="m0 400v-400h400v400z"/>
+				<path fill-rule="evenodd" class="s1" d="m0 200c0-110.46 89.54-200 200-200 110.46 0 200 89.54 200 200 0 110.46-89.54 200-200 200-110.46 0-200-89.54-200-200z"/>
+				<path class="s2" d="m110.5 200c0-49.43 40.07-89.5 89.5-89.5 49.43 0 89.5 40.07 89.5 89.5 0 49.43-40.07 89.5-89.5 89.5-49.43 0-89.5-40.07-89.5-89.5z"/>
+			</g>
+			<path id="I" class="s3" aria-label="I"  d="m204 244h-10.3q0 0 0 0 0 0 0 0v-86.6q0 0 0 0 0 0 0 0h10.3q0 0 0 0 0 0 0 0v86.6q0 0 0 0 0 0 0 0z"/>
+		</g>
+	</g>
+</svg>

@@ -1,7 +1,7 @@
 import { corsFetch } from "./http";
 import { dispatchMessage } from "./dispatch";
 import { isWolfxConnected } from "./wolfxEew";
-import { estimateMaxShindo } from "./utils";
+import { estimateMaxShindo, resolveIntensity } from "./utils";
 import { getSettings } from "../settings";
 import { useAppStore } from "../../store";
 import type { EewData } from "../wsTypes";
@@ -30,16 +30,9 @@ const refreshExptechEew = async (): Promise<void> => {
         (author === "nied" && settings.sourceExptechNied && !isWolfxConnected() && !isJmaCoveredByFan()))
     ) {
       exptechEarthquakes.set(id, serial);
-      let intensity: { number: number | null; type: string | null } = {
-        number: eq.max,
-        type: "cwasis",
-      };
-      if (author !== "cwa") {
-        intensity = {
-          number: await estimateMaxShindo(eq.mag, eq.depth, eq.lat, eq.lon),
-          type: "shindo",
-        };
-      }
+      const intensity = author === "cwa"
+        ? await resolveIntensity(eq.max, "cwasis", eq.mag, eq.depth, eq.lat, eq.lon)
+        : await resolveIntensity(await estimateMaxShindo(eq.mag, eq.depth, eq.lat, eq.lon), "shindo", eq.mag, eq.depth, eq.lat, eq.lon);
       dispatchMessage({
         type: "eew",
         data: {

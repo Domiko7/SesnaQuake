@@ -51,8 +51,17 @@ const shindoGeojson = "geojson/shindo.geojson";
 const mmiGeojson = "geojson/mmi.geojson";
 const cwasisGeojson = "geojson/cwasis.geojson";
 const csisGeojson = "geojson/csis.geojson";
+const geonetMmiGeojson = "geojson/geonet_mmi.geojson";
 
-export const addGeojson = (geojson: string, country: string): void => {
+interface BorderStyle {
+  color: string;
+  width: number;
+  opacity: number;
+}
+
+const defaultBorderStyle: BorderStyle = { color: "#707173", width: 0.65, opacity: 0.5 };
+
+export const addGeojson = (geojson: string, country: string, borderStyle: BorderStyle = defaultBorderStyle): void => {
   const m = getMap();
   m.addSource(country, {
     type: "geojson",
@@ -74,9 +83,9 @@ export const addGeojson = (geojson: string, country: string): void => {
     type: "line",
     source: country,
     paint: {
-      "line-color": "#4f5053",
-      "line-width": 0.75,
-      "line-opacity": 1,
+      "line-color": borderStyle.color,
+      "line-width": borderStyle.width,
+      "line-opacity": borderStyle.opacity,
     },
   });
 };
@@ -87,6 +96,15 @@ export const flyZoom = (lon: number, lat: number, zoom: number, duration: number
     zoom,
     essential: true,
     duration: duration * 1000,
+  });
+};
+
+export const flyToBounds = (bounds: [[number, number], [number, number]], duration: number, maxZoom = 8.5): void => {
+  getMap().fitBounds(bounds, {
+    padding: 40,
+    essential: true,
+    duration: duration * 1000,
+    maxZoom,
   });
 };
 
@@ -128,15 +146,16 @@ const setupMapLayers = (): void => {
     },
   });
 
-  addGeojson(worldGeojson, "world");
+  addGeojson(worldGeojson, "world", { color: "#707173", width: 0.9, opacity: 1 });
   addGeojson(shindoGeojson, "shindo");
   addGeojson(mmiGeojson, "mmi");
   addGeojson(cwasisGeojson, "cwasis");
   addGeojson(csisGeojson, "csis");
+  addGeojson(geonetMmiGeojson, "geonetMmi");
 
   initShakemap();
 
-  ["world", "shindo", "mmi", "cwasis", "csis"].forEach(country => {
+  ["world", "shindo", "mmi", "cwasis", "csis", "geonetMmi"].forEach(country => {
     m.moveLayer(`${country}-borders`);
   });
 

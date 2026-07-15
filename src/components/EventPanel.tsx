@@ -19,8 +19,18 @@ export const EventPanel = ({ display }: EventPanelProps) => {
             color: getTextColor(display.intensity.number, display.intensity.type),
           } : undefined}
           >{display ? display.title : t("eewInactive")}</span>
-          <span className={`event-panel__report-label${display?.isEew ? "" : " transparent"}`}>{t("reportNumber")}</span>
-          <span className={`event-panel__report-value${display?.isEew ? "" : " transparent"}`}>
+          <span
+            className={`event-panel__report-label${display?.isEew ? "" : " transparent"}`}
+            style={display ? {
+              color: getTextColor(display.intensity.number, display.intensity.type),
+            } : undefined}
+          >{t("reportNumber")}</span>
+          <span 
+            className={`event-panel__report-value${display?.isEew ? "" : " transparent"}`}
+            style={display ? {
+            color: getTextColor(display.intensity.number, display.intensity.type),
+            } : undefined}
+          >
             {display?.isEew ? `#${display.reportNumber}` : ""}
           </span>
         </div>

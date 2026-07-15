@@ -49,6 +49,7 @@ export interface EqData {
   lon: number;
   shindoRegions?: { code: string; intensity: number }[];
   intensityStations?: { lat: number; lon: number; intensity: number }[];
+  mmiStations?: { lat: number; lon: number; intensity: number; pga: number; pgv: number }[];
 }
 
 export interface Intensity {

@@ -1,17 +1,26 @@
 import { playSound } from "./speaker";
+import { reportSound } from "./sounds";
+import { getSettings } from "./settings";
 import { useAppStore } from "../store";
-import type { EqPacket, Intensity } from "./wsTypes";
+import type { EqPacket } from "./wsTypes";
 
-import eqInt1Sound from "../assets/sounds/eqInt1.mp3";
-import eqInt5Sound from "../assets/sounds/eqInt5.mp3";
-import eqInt7Sound from "../assets/sounds/eqInt7.mp3";
-
-export const playEqSound = (intensity: Intensity): void => {
-  if (intensity.number >= 7) playSound(eqInt7Sound);
-  else if (intensity.number >= 5) playSound(eqInt5Sound);
-  else if (intensity.number >= 1) playSound(eqInt1Sound);
-};
+const WARMUP_MS = 15000;
+const REPORT_SOUND_COOLDOWN_MS = 1500;
+const startedAt = Date.now();
+let lastReportSoundAt = 0;
 
 export const eq = (data: EqPacket): void => {
+  const pastEvents = useAppStore.getState().pastEvents;
+  const isNew = !pastEvents.some((e) => e.id === data.data.id);
+  const latestKnownTime = pastEvents.reduce((max, e) => Math.max(max, e.time), 0);
+  const isLatest = data.data.time >= latestKnownTime;
+
   useAppStore.getState().addPastEvent(data.data);
+
+  const isWarmedUp = Date.now() - startedAt > WARMUP_MS;
+  const isOffCooldown = Date.now() - lastReportSoundAt > REPORT_SOUND_COOLDOWN_MS;
+  if (isNew && isLatest && isWarmedUp && isOffCooldown && getSettings().soundReportEnabled) {
+    lastReportSoundAt = Date.now();
+    playSound(reportSound);
+  }
 };

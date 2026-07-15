@@ -20,10 +20,11 @@ export const checkForUpdate = async (): Promise<void> => {
   try {
     const currentVersion = await getVersion().catch(() => __APP_VERSION__);
 
-    const response = await corsFetch("https://api.github.com/repos/Domiko7/SesnaQuake/releases/latest");
+    const response = await corsFetch("https://api.github.com/repos/Domiko7/SesnaQuake/releases");
     if (!response.ok) throw new Error(`GitHub releases check returned ${response.status}`);
-    const data = await response.json() as { tag_name?: string };
-    const latestVersion = data.tag_name?.replace(/^v/i, "") ?? null;
+    const data = await response.json() as { tag_name?: string; draft?: boolean }[];
+    const latest = data.find((release) => !release.draft);
+    const latestVersion = latest?.tag_name?.replace(/^v/i, "") ?? null;
     if (!latestVersion) return;
 
     const outdated = isNewer(parseVersion(latestVersion), parseVersion(currentVersion));
