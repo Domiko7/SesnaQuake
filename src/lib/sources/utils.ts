@@ -33,9 +33,12 @@ export const cwaShindoToPgv = (intensity: number): number => {
   return Math.round(pgv * 100) / 100;
 };
 
+const SHINDO_JMA_BIN_CENTERS = [0.25, 1.0, 2.0, 3.0, 4.0, 4.75, 5.25, 5.75, 6.25, 6.75];
+
 export const shindoToPgv = (intensity: number): number => {
-  if (intensity < 0.5) return 0;
-  const pgv = Math.pow(10, (intensity - 0.94) / 2.0);
+  if (intensity <= 0) return 0;
+  const jma = SHINDO_JMA_BIN_CENTERS[intensity] ?? SHINDO_JMA_BIN_CENTERS[SHINDO_JMA_BIN_CENTERS.length - 1];
+  const pgv = Math.pow(10, (jma - 2.68) / 1.72);
   return Math.round(pgv * 100) / 100;
 };
 
@@ -187,7 +190,7 @@ export const estimateMaxCsis = async (
   lon: number,
 ): Promise<number> => {
   const epiDistKm = await epicentralLandDistanceKm(lat, lon);
-  return estimateCsis(mag, depth ?? 0, epiDistKm);
+  return Math.max(1, estimateCsis(mag, depth ?? 0, epiDistKm));
 };
 
 export const estimateMaxCwaShindo = async (
@@ -207,7 +210,7 @@ export const estimateMaxGeonetMmi = async (
   lon: number,
 ): Promise<number> => {
   const epiDistKm = await epicentralLandDistanceKm(lat, lon);
-  return estimateGeonetMmi(mag, depth ?? 0, epiDistKm);
+  return Math.max(1, estimateGeonetMmi(mag, depth ?? 0, epiDistKm));
 };
 
 export type IntensityType = "mmi" | "shindo" | "csis" | "cwasis" | "geonet_mmi";

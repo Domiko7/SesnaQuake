@@ -34,6 +34,7 @@ const csisFromMotion = (pga: number, pgv: number): number =>
   pgv > 0 ? csisFromPgv(pgv) : csisFromPga(pga);
 
 const cwasisFromMotion = (pga: number, pgv: number): number => {
+  if (pga <= 0) return shindoFromPgv(pgv);
   if (pga < 80.0) {
     if (pga < 0.8) return 0;
     if (pga < 2.5) return 1;
@@ -88,15 +89,15 @@ export const getIntensityFromMotion = (scale: ForceableScale, pga: number, pgv: 
   switch (scale) {
     case "shindo":
       return shindoFromPgv(pgv);
-    case "csis":
-      return csisFromMotion(pga, pgv);
     case "cwasis":
       return cwasisFromMotion(pga, pgv);
+    case "csis":
+      return Math.max(1, csisFromMotion(pga, pgv));
     case "geonet_mmi":
-      return geonetMmiFromMotion(pga, pgv);
+      return Math.max(1, geonetMmiFromMotion(pga, pgv));
     case "mmi":
     default:
-      return mmiFromPgv(pgv);
+      return Math.max(1, mmiFromPgv(pgv));
   }
 };
 
