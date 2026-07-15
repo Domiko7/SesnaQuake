@@ -1,5 +1,10 @@
 {
   "notification": "{{time}}に、最大震度{{intensity}}、マグニチュード{{mag}}、深さ{{depth}}の地震が発生しました",
+  "webVersionNoticeTitle": "ウェブ版に関するお知らせ",
+  "webVersionNoticeBody": "このウェブ版は通常利用には推奨されません。一部のデータソース(JMA、Kmoni、P-alert)やデスクトップ版限定の機能が利用できません。",
+  "webVersionNoticeReliability": "Chromeなどのブラウザは、リソース節約のため非アクティブ・バックグラウンドのタブを予告なくスリープさせることがあり、このページも静かに動作を停止してしまいます。緊急地震速報をこのページに頼っていると、最も必要な瞬間に受け取れなくなる可能性があります。デスクトップアプリにはこのリスクはありません。",
+  "webVersionNoticeGetDesktop": "デスクトップアプリを入手",
+  "webVersionNoticeDismiss": "閉じる",
   "eewLocated": "地震は{{location}}で発生しました",
   "eewReport": "地震速報{{number}}、マグニチュード{{mag}}、深さ{{depth}} km、震度{{intensity}}",
   "eewIntensity": "最大震度 {{intensity}}",

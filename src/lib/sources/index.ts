@@ -13,6 +13,7 @@ import { startExptechStnSource } from "./exptechStn";
 import { startPalertStnSource } from "./palertStn";
 // import { startKmaStnSource } from "./kmaStn"; // temporarily disabled
 import { getSettings } from "../settings";
+import { isTauri } from "../runtime";
 
 let started = false;
 
@@ -42,13 +43,13 @@ export const startSources = (): void => {
   if (settings.sourceShakealert) startShakealertEewSource();
 
   if (settings.sourceCenc) startCencEqSource();
-  if (settings.sourceJma) startJmaAtomEqSource();
+  if (settings.sourceJma && isTauri()) startJmaAtomEqSource();
   if (settings.sourceEmsc) startEmscEqSource();
   if (settings.sourceUsgs) startUsgsEqSource();
   if (settings.sourceGeonet) startGeonetEqSource();
   if (settings.sourceBreq) startBreqEqSource();
 
-  if (settings.sourceKmoni) startKmoniStnSource();
+  if (settings.sourceKmoni && isTauri()) startKmoniStnSource();
   if (settings.sourceExptechStn) startExptechStnSource();
-  if (settings.sourcePalert) startPalertStnSource();
+  if (settings.sourcePalert && isTauri()) startPalertStnSource();
 };

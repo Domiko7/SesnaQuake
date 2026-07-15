@@ -50,6 +50,103 @@ html, body {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+#web-version-notice-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+#web-version-notice {
+  width: min(34rem, 100%);
+  max-height: calc(100vh - 2.5rem);
+  overflow-y: auto;
+  background: #282828;
+  border-radius: 14px;
+  padding: 2.25rem 2.25rem 2rem;
+  text-align: center;
+  color: #ececec;
+}
+
+.web-version-notice__icon {
+  width: 4.25rem;
+  height: 4.25rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.web-version-notice__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+.web-version-notice__body {
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: #c4c4c4;
+  margin: 0 0 0.9rem;
+}
+
+.web-version-notice__body--warning {
+  color: #e0a248;
+  font-weight: 600;
+}
+
+.web-version-notice__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 1.35rem;
+}
+
+.web-version-notice__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0b1417;
+  background: #19b0c8;
+  border-radius: 9px;
+  text-decoration: none;
+}
+
+.web-version-notice__cta:hover {
+  background: #1fc4df;
+}
+
+.web-version-notice__cta:focus-visible {
+  outline: 2px solid #19b0c8;
+  outline-offset: 2px;
+}
+
+.web-version-notice__dismiss {
+  padding: 0.55rem 1rem;
+  font: inherit;
+  font-size: 0.85rem;
+  color: #9a9a9a;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.web-version-notice__dismiss:hover {
+  color: #ececec;
+}
+
+.web-version-notice__dismiss:focus-visible {
+  outline: 2px solid #19b0c8;
+  outline-offset: 1px;
+}
+
 #debug-info {
   position: fixed;
   top: 0;
@@ -174,9 +271,7 @@ html, body {
   max-height: calc(100vh - 2.5rem);
   color: #ececec;
   background: #282828;
-  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
 
@@ -185,7 +280,6 @@ html, body {
   align-items: center;
   justify-content: space-between;
   padding: 1.1rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .settings-modal__header h2 {
@@ -357,14 +451,14 @@ html, body {
   font-size: 0.95rem;
   font-weight: 600;
   color: #10262e;
-  background: #b8bfc0;
+  background: #19b0c8;
   border: none;
   border-radius: 6px;
   cursor: pointer;
 }
 
 .save-btn:hover {
-  background: #dbe3e4;
+  background: #24c2db;
 }
 
 .save-btn:focus-visible {

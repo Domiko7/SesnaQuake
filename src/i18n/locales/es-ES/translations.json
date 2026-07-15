@@ -1,5 +1,10 @@
 {
   "notification": "A las {{time}}, ocurrió un terremoto con intensidad máxima {{intensity}}, magnitud {{mag}} y profundidad {{depth}}",
+  "webVersionNoticeTitle": "Aviso sobre la versión web",
+  "webVersionNoticeBody": "No se recomienda el uso habitual de esta versión web. Carece de algunas fuentes de datos (JMA, Kmoni, P-alert) y otras funciones exclusivas de la aplicación de escritorio.",
+  "webVersionNoticeReliability": "Navegadores como Chrome ponen a dormir las pestañas inactivas o en segundo plano para ahorrar recursos, pausando esta página silenciosamente y sin previo aviso. Confiar en ella para las alertas sísmicas tempranas significa que podrías perder el acceso justo en el peor momento; la app de escritorio no tiene ese riesgo.",
+  "webVersionNoticeGetDesktop": "Obtener la app de escritorio",
+  "webVersionNoticeDismiss": "Descartar",
   "eewLocated": "El terremoto ocurrió en {{location}}",
   "eewReport": "Informe de terremoto {{number}}, magnitud {{mag}}, profundidad {{depth}} km, intensidad {{intensity}}",
   "eewIntensity": "Intensidad del terremoto {{intensity}}",

@@ -7,6 +7,7 @@ import { EventPanel } from "./components/EventPanel";
 import { PastEvents } from "./components/PastEvents";
 import { SettingsModal } from "./components/SettingsModal";
 import { ShakingExpectedBox } from "./components/ShakingExpectedBox";
+import { WebVersionNotice } from "./components/WebVersionNotice";
 import { useAppStore } from "./store";
 import { useSettingsStore } from "./lib/settings";
 import { useEventDisplay } from "./lib/useEventDisplay";
@@ -94,6 +95,8 @@ function App() {
   return (
     <div id="app">
       <MapView />
+
+      <WebVersionNotice />
 
       <DebugInfo />
 

@@ -1,5 +1,10 @@
 {
   "notification": "O {{time}} wystąpiło trzęsienie ziemi o maksymalnej intensywności {{intensity}}, magnitudzie {{mag}} i głębokości {{depth}}",
+  "webVersionNoticeTitle": "Informacja o wersji webowej",
+  "webVersionNoticeBody": "Ta wersja webowa nie jest zalecana do regularnego użytku. Brakuje w niej niektórych źródeł danych (JMA, Kmoni, P-alert) oraz innych funkcji dostępnych tylko w aplikacji desktopowej.",
+  "webVersionNoticeReliability": "Przeglądarki takie jak Chrome usypiają nieaktywne lub działające w tle karty, aby oszczędzać zasoby, co bez żadnego ostrzeżenia po cichu wstrzymuje działanie tej strony. Poleganie na niej w kwestii wczesnego ostrzegania o trzęsieniach ziemi oznacza ryzyko utraty dostępu w najgorszym możliwym momencie - aplikacja desktopowa nie ma tego ryzyka.",
+  "webVersionNoticeGetDesktop": "Pobierz aplikację desktopową",
+  "webVersionNoticeDismiss": "Zamknij",
   "eewLocated": "Trzęsienie ziemi miało miejsce w {{location}}",
   "eewReport": "Raport sejsmiczny {{number}}, magnituda {{mag}}, głębokość {{depth}} km, intensywność {{intensity}}",
   "eewIntensity": "Siła trzęsienia ziemi {{intensity}}",

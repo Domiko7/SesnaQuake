@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { Store } from "@tauri-apps/plugin-store";
 import { DEFAULT_SETTINGS, parseSettings, formatSettings, type AppSettings } from "./settingsSchema";
+import { isTauri } from "./runtime";
 
 interface NavigatorUAData {
   brands: Array<{ brand: string; version: string }>;
@@ -43,8 +44,6 @@ export const useSettingsStore = create<SettingsState>(() => ({
 
 export const getSettings = (): AppSettings => useSettingsStore.getState().settings;
 
-const inTauri = (): boolean => typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
-
 const LOCALSTORAGE_KEY = "app_settings";
 const STORE_FILE = "settings.json";
 const STORE_KEY = "values";
@@ -68,7 +67,7 @@ const applyUiZoom = (uiZoom: number): void => {
 export const loadSettings = async (): Promise<void> => {
   let raw: Record<string, string> | null = null;
 
-  if (inTauri()) {
+  if (isTauri()) {
     store = await Store.load(STORE_FILE);
     raw = (await store.get<Record<string, string>>(STORE_KEY)) ?? null;
     if (!raw) {

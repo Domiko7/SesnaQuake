@@ -1,5 +1,10 @@
 {
   "notification": "{{time}}发生地震，最大震度为{{intensity}}，震级{{mag}}，深度{{depth}}",
+  "webVersionNoticeTitle": "网页版提示",
+  "webVersionNoticeBody": "不建议日常使用此网页版。它缺少部分数据源(JMA、Kmoni、P-alert)以及仅桌面版才有的其他功能。",
+  "webVersionNoticeReliability": "Chrome 等浏览器会为节省资源而使不活跃或后台标签页休眠，这会在没有任何提示的情况下悄悄暂停此页面。如果依赖此页面获取地震预警，可能会在最关键的时刻收不到通知——桌面应用没有这个风险。",
+  "webVersionNoticeGetDesktop": "获取桌面应用",
+  "webVersionNoticeDismiss": "关闭",
   "eewLocated": "地震发生在{{location}}",
   "eewReport": "地震报告{{number}}，震级{{mag}}，深度{{depth}}公里，震度{{intensity}}",
   "eewIntensity": "最大震度 {{intensity}}",

@@ -1,5 +1,10 @@
 {
   "notification": "At {{time}}, an earthquake occurred with a maximum intensity of {{intensity}}, magnitude {{mag}}, and depth {{depth}}",
+  "webVersionNoticeTitle": "Web version notice",
+  "webVersionNoticeBody": "This web version is not recommended for regular use. It's missing some data sources (JMA, Kmoni, P-alert) and other features only available in the desktop app.",
+  "webVersionNoticeReliability": "Browsers like Chrome will put inactive or background tabs to sleep to save resources, silently pausing this page without any warning. Relying on it for earthquake early warnings means you could lose access at the worst possible time - the desktop app doesn't have this risk.",
+  "webVersionNoticeGetDesktop": "Get the desktop app",
+  "webVersionNoticeDismiss": "Dismiss",
   "eewLocated": "The earthquake occurred at {{location}}",
   "eewReport": "Earthquake report {{number}}, magnitude {{mag}}, depth {{depth}} km, intensity {{intensity}}",
   "eewIntensity": "Earthquake intensity {{intensity}}",
