@@ -22,7 +22,13 @@ const refreshEmscEq = async (): Promise<string[]> => {
 
       const authLower = eq?.properties?.auth?.toLowerCase();
       const usgsNetworkAuths = ["neic", "usgs", "scsn", "nc", "hv", "uu", "pr", "ak", "nm", "tx"];
-      const isDuplicateOfOtherSource = authLower === "cenc" || authLower === "jma" || authLower === "nied" || authLower === "gns" || usgsNetworkAuths.includes(authLower);
+      const { usgs: isUsgsConnected, cenc: isCencConnected, jma: isJmaConnected } = useAppStore.getState().sourceConnections;
+      const isDuplicateOfOtherSource =
+        (authLower === "cenc" && isCencConnected) ||
+        (authLower === "jma" && isJmaConnected) ||
+        (authLower === "nied" && isJmaConnected) ||
+        authLower === "gns" ||
+        (usgsNetworkAuths.includes(authLower) && isUsgsConnected);
 
       if (isUpdated && !isDuplicateOfOtherSource) {
         const estimatedMMI = await estimateMaxMMI(
