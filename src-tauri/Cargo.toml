@@ -1,6 +1,6 @@
 [package]
 name = "sesnaquake"
-version = "0.3.1-pre.3"
+version = "0.3.1-pre.4"
 description = "Real-time earthquake early warnings, live seismic stations and quake reports on an interactive map."
 authors = ["Domiko"]
 edition = "2021"
