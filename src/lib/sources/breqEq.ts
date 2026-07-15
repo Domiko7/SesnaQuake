@@ -11,7 +11,7 @@ const breqLastUpdates = new Map<string, string>();
 let isPolling = false;
 
 const refreshBreqEq = async (): Promise<string[]> => {
-  const url = "https://squad-snaking-registry.ngrok-free.dev/fdsnws/event/1/query?nodata=404&limit=15";
+  const url = "https://breq.pp.ua/fdsnws/event/1/query?nodata=404&limit=15";
   const httpResponse = await corsFetch(url, { headers: { "ngrok-skip-browser-warning": "true" } });
   if (httpResponse.status === 404) return [];
   if (!httpResponse.ok) throw new Error(`BREQ feed returned ${httpResponse.status}`);
