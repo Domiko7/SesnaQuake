@@ -1,9 +1,0 @@
-{
-  "type": "FeatureCollection",
-  "features": [
-    { "type": "Feature", "properties": { "name": "Tokyo" }, "geometry": { "type": "Point", "coordinates": [139.6917, 35.6895] } },
-    { "type": "Feature", "properties": { "name": "Seoul" }, "geometry": { "type": "Point", "coordinates": [126.9780, 37.5665] } },
-    { "type": "Feature", "properties": { "name": "Beijing" }, "geometry": { "type": "Point", "coordinates": [116.4074, 39.9042] } },
-    { "type": "Feature", "properties": { "name": "Taipei" }, "geometry": { "type": "Point", "coordinates": [121.5654, 25.0330] } }
-  ]
-}

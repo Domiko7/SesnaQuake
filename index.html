@@ -2,114 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="https://cdn.domiko.dev/images/SesnaQuake.png" />
+    <link rel="icon" type="image/png" href="/images/SesnaQuake.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SesnaQuake</title>
-    <meta name="theme-color" content="#19b0c8"/>
-    <meta name="description" content="Real-time earthquake early warnings, live seismic stations and quake reports from Japan, China, Taiwan and worldwide on an interactive map.">
-    <meta name="title" content="SesnaQuake"/>
-    <meta name="author" content="Domiko"/>
-    <meta name="email" content="domikobusiness@gmail.com"/>
-    <meta property="og:title" content="SesnaQuake" />
-    <meta property="og:description" content="Real-time earthquake early warnings, live seismic stations and quake reports from Japan, China, Taiwan and worldwide on an interactive map." />
-    <meta property="og:image" content="https://cdn.domiko.dev/images/SesnaQuake.png" />
-    <meta property="og:type" content="website" />
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SesnaQuake">
-    <meta name="twitter:description" content="Real-time earthquake early warnings, live seismic stations and quake reports from Japan, China, Taiwan and worldwide on an interactive map.">
-    <meta name="twitter:image" content="https://cdn.domiko.dev/images/SesnaQuake.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-    <script data-goatcounter="https://sesnaquake.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-    <script type="module" crossorigin src="./assets/index-Baiv9_cI.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-B2rTELtH.css">
+    <script data-goatcounter="https://sesnaquake.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+    <script type="module" crossorigin src="/assets/index-BSPArlSh.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-yK6GPLGK.css">
   </head>
   <body>
-    <div id="app">
-      <div id="map"></div>
-
-      <div id="cookie-banner">
-        <p id="cookie-banner-text" data-i18n="cookieText"></p>
-        <button id="cookie-banner-btn" class="btn--primary" class="btn">OK</button>
-      </div>
-
-      <div id="settings-banner" class="invisible" role="dialog" aria-modal="true" aria-labelledby="settings-banner__title">
-        <div class="settings-modal">
-          <header class="settings-modal__header">
-            <h2 id="settings-banner__title" data-i18n="settingsTitle">Settings</h2>
-            <button id="settings-banner__close-btn" class="settings-modal__close" type="button" aria-label="Close">
-              <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            </button>
-          </header>
-          <div class="settings-modal__body" id="settings-modal__body">
-            <!-- Sections and fields are rendered from src/ts/utils/settingsSchema.ts -->
-          </div>
-          <footer class="settings-modal__footer">
-            <span class="settings-modal__note" data-i18n="settingsReloadNote">Saving reloads the app</span>
-            <button id="settings-banner__save-btn" class="btn--primary" data-i18n="save">Save</button>
-          </footer>
-        </div>
-      </div>
-
-      <div id="debug-info">
-        <div class="debug-info-block">
-          <p class="debug-info__title">FPS:</p>
-          <p class="debug-info__label debug-info__unknown-color debug-info__fps-text">Unknown</p>
-        </div>
-        <div class="debug-info-block">
-          <p class="debug-info__title">Version:</p>
-          <p class="debug-info__label debug-info__unknown-color debug-info__version-text">Unknown</p>
-        </div>
-        <div class="debug-info-block">
-          <p class="debug-info__title">Server:</p>
-          <p class="debug-info__label debug-info__server-connection-text">Disconnected</p>
-        </div>
-      </div>
-
-      <div class="elements">
-        <div id="clock">
-          <span id="time">----/--/-- --:--:--</span>
-        </div>
-
-        <button id="settings-btn">
-          <img class="settings-btn-img" src="./images/settings.svg" alt="">
-        </button>
-      </div>
-
-      <div id="realtime-info">
-        <div id="event-panel">
-          <div class="event-panel__header">
-            <span class="event-panel__title" data-i18n="eewInactive"></span>
-            <span class="event-panel__report-label transparent" data-i18n="reportNumber"></span>
-            <span class="event-panel__report-value transparent">#15</span>
-          </div>
-          <div class="event-panel__content transparent">
-            <div class="event-panel__intensity">
-              <span class="event-panel__seismic-intensity-label" data-i18n="intensity">Seismic intensity</span>
-              <span class="event-panel__seismic-intensity-value">3</span>
-            </div>
-            <div class="event-panel__details">
-              <span class="event-panel__location">Seas near Tokara Islands</span>
-              <span class="event-panel__time">2025/09/27 19:56:12</span>
-              <div class="event-panel__info">
-                <span class="event-panel__magnitude">M5.1</span>
-                <span class="event-panel__depth">10km</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="info">
-        <div id="info-panel">
-          <div class="past-events">
-
-          </div>
-        </div>
-      </div>
-
-    </div>
+    <div id="root"></div>
   </body>
 </html>
