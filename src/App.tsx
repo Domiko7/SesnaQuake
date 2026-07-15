@@ -17,6 +17,7 @@ import { setStationsVisible, updateConfirmedStations, updateConfirmedMmiStations
 import { startSources } from "./lib/sources";
 import { initNotifications } from "./lib/notify";
 import { checkForUpdate } from "./lib/updateCheck";
+import { assetUrl } from "./lib/assetUrl";
 
 const LAST_QUAKE_ID = "lastQuake";
 const WIDE_ZOOM_SOURCES = new Set(["usgs", "cenc", "emsc"]);
@@ -61,7 +62,7 @@ function App() {
     updateConfirmedStations(display && !display.isEew ? display.intensityStations ?? [] : []);
     updateConfirmedMmiStations(display && !display.isEew ? display.mmiStations ?? [] : []);
     if (display && !display.isEew) {
-      placeMarker(display.lon, display.lat, "60px", "60px", LAST_QUAKE_ID, "images/epicenter.png");
+      placeMarker(display.lon, display.lat, "60px", "60px", LAST_QUAKE_ID, assetUrl("images/epicenter.png"));
       updateShakemap(LAST_QUAKE_ID, display.lat, display.lon, display.mag, display.depth);
     }
   }, [mapReady, display?.isEew, display?.lat, display?.lon, display?.mag, display?.depth, display?.shindoRegions, display?.intensityStations, display?.mmiStations]);
@@ -110,7 +111,7 @@ function App() {
             setPanelMode("auto");
           }}
         >
-          <img className="btn-img" src="/images/home.svg" alt="" />
+          <img className="btn-img" src={assetUrl("images/home.svg")} alt="" />
         </button>
         <button
           id="realtime-mode-btn"
@@ -118,7 +119,7 @@ function App() {
           type="button"
           onClick={() => setPanelMode("realtime")}
         >
-          <img className="btn-img" src="/images/realtime.svg" alt="" />
+          <img className="btn-img" src={assetUrl("images/realtime.svg")} alt="" />
         </button>
         <button
           id="info-mode-btn"
@@ -126,10 +127,10 @@ function App() {
           type="button"
           onClick={() => setPanelMode("past")}
         >
-          <img className="btn-img" src="/images/info.svg" alt="" />
+          <img className="btn-img" src={assetUrl("images/info.svg")} alt="" />
         </button>
         <button id="settings-btn" className="btn" type="button" onClick={() => setSettingsOpen(true)}>
-          <img className="btn-img" src="/images/settings.svg" alt="" />
+          <img className="btn-img" src={assetUrl("images/settings.svg")} alt="" />
         </button>
         <Clock />
       </div>

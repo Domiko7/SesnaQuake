@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { isTauri } from "../lib/runtime";
+import { assetUrl } from "../lib/assetUrl";
 
 const RELEASES_URL = "https://github.com/Domiko7/SesnaQuake/releases";
 
@@ -13,7 +14,7 @@ export const WebVersionNotice = () => {
   return (
     <div id="web-version-notice-overlay">
       <div id="web-version-notice" role="alert">
-        <img className="web-version-notice__icon" src="images/SesnaQuake.png" alt="" />
+        <img className="web-version-notice__icon" src={assetUrl("images/SesnaQuake.png")} alt="" />
         <p className="web-version-notice__title">{t("webVersionNoticeTitle")}</p>
         <p className="web-version-notice__body">{t("webVersionNoticeBody")}</p>
         <p className="web-version-notice__body web-version-notice__body--warning">{t("webVersionNoticeReliability")}</p>

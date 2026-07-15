@@ -1,6 +1,7 @@
 import { getMap } from "../map/mapInstance";
 import { getShakemapColor } from "./transform";
 import { getSettings } from "./settings";
+import { assetUrl } from "./assetUrl";
 import type { GeoJSONSource } from "maplibre-gl";
 import type { Feature, FeatureCollection, Polygon, MultiPolygon, Position } from "geojson";
 
@@ -22,11 +23,11 @@ interface EewSource {
 }
 
 const regionFiles: { url: string; scale: Scale }[] = [
-  { url: "geojson/shindo.geojson", scale: "shindo" },
-  { url: "geojson/cwasis.geojson", scale: "cwasis" },
-  { url: "geojson/mmi.geojson", scale: "mmi" },
-  { url: "geojson/csis.geojson", scale: "csis" },
-  { url: "geojson/geonet_mmi.geojson", scale: "geonet_mmi" },
+  { url: assetUrl("geojson/shindo.geojson"), scale: "shindo" },
+  { url: assetUrl("geojson/cwasis.geojson"), scale: "cwasis" },
+  { url: assetUrl("geojson/mmi.geojson"), scale: "mmi" },
+  { url: assetUrl("geojson/csis.geojson"), scale: "csis" },
+  { url: assetUrl("geojson/geonet_mmi.geojson"), scale: "geonet_mmi" },
 ];
 
 const regions: ShakemapRegion[] = [];

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { getColor, getTextColor, getTextIntensity } from "../lib/transform";
 import { getSettings } from "../lib/settings";
 import { computeHomeImpact } from "../lib/homeImpact";
+import { assetUrl } from "../lib/assetUrl";
 import type { EventDisplay } from "../lib/useEventDisplay";
 
 interface ShakingExpectedBoxProps {
@@ -75,7 +76,7 @@ export const ShakingExpectedBox = ({ display }: ShakingExpectedBoxProps) => {
             <span className="shaking-expected-box__arrival shaking-expected-box__arrival--s">{formatArrival(impact.sArrivalSec)}</span>
           </div>
         </div>
-        <img className="shaking-expected-box__warning" src="/images/AlertTriangle.svg" alt="" />
+        <img className="shaking-expected-box__warning" src={assetUrl("images/AlertTriangle.svg")} alt="" />
       </div>
     </div>
   );

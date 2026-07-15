@@ -3,6 +3,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { getSettings } from "../lib/settings";
 import { initShakemap } from "../lib/shakemap";
 import { initStations } from "./stations";
+import { assetUrl } from "../lib/assetUrl";
 import type { AppSettings } from "../lib/settingsSchema";
 
 export const getHomeLat = (): number => getSettings().lat;
@@ -46,12 +47,12 @@ export const onMapReady = (cb: () => void): void => {
 
 const markers = new Map<string, maplibregl.Marker>();
 
-const worldGeojson = "geojson/world.geojson";
-const shindoGeojson = "geojson/shindo.geojson";
-const mmiGeojson = "geojson/mmi.geojson";
-const cwasisGeojson = "geojson/cwasis.geojson";
-const csisGeojson = "geojson/csis.geojson";
-const geonetMmiGeojson = "geojson/geonet_mmi.geojson";
+const worldGeojson = assetUrl("geojson/world.geojson");
+const shindoGeojson = assetUrl("geojson/shindo.geojson");
+const mmiGeojson = assetUrl("geojson/mmi.geojson");
+const cwasisGeojson = assetUrl("geojson/cwasis.geojson");
+const csisGeojson = assetUrl("geojson/csis.geojson");
+const geonetMmiGeojson = assetUrl("geojson/geonet_mmi.geojson");
 
 interface BorderStyle {
   color: string;
@@ -230,7 +231,7 @@ export const createMap = (container: HTMLElement): maplibregl.Map => {
   map.on("load", () => {
     try {
       setupMapLayers();
-      placeMarker(initial.lon, initial.lat, "1.75vw", "1.75vh", "location", "images/location.svg");
+      placeMarker(initial.lon, initial.lat, "1.75vw", "1.75vh", "location", assetUrl("images/location.svg"));
 
       ready = true;
       readyCallbacks.splice(0).forEach(cb => cb());

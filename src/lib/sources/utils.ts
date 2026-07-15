@@ -1,6 +1,7 @@
 import { point, distance, booleanPointInPolygon, nearestPointOnLine, polygonToLine, simplify, lineString } from "@turf/turf";
 import { estimateShindo, estimateCsis, estimateMmi, estimateCwaShindo, estimateGeonetMmi } from "../shakemap";
 import { getSettings } from "../settings";
+import { assetUrl } from "../assetUrl";
 import type {
   Feature,
   FeatureCollection,
@@ -106,7 +107,7 @@ const bboxDistanceKm = (lon: number, lat: number, bbox: CoastChunk["bbox"]): num
 
 const loadWorldLand = (): Promise<void> => {
   landLoad ??= (async () => {
-    const response = await fetch("geojson/world_land.geojson");
+    const response = await fetch(assetUrl("geojson/world_land.geojson"));
     if (!response.ok) throw new Error(`world_land.geojson returned ${response.status}`);
     const fc = (await response.json()) as FeatureCollection;
 

@@ -3,6 +3,7 @@ import { getBrowserVoicesFor } from "./ttsVoices";
 import { synthesizeAzure } from "./ttsProviders/azure";
 import { synthesizeElevenLabs } from "./ttsProviders/elevenlabs";
 import { synthesizeOpenAi } from "./ttsProviders/openai";
+import { eqSound } from "./sounds";
 
 export interface TtsSegment {
   language: string;
@@ -126,6 +127,28 @@ export const speak = (speed: number, language: string, text: string): void => {
 export const testSpeak = (config: TtsConfig, language: string, text: string): void => {
   speakWithConfig(config, 1.2, [{ language, text }]);
 };
+
+let audioUnlocked = false;
+
+const unlockAudio = () => {
+  if (audioUnlocked) return;
+  audioUnlocked = true;
+  const unlock = new Audio(eqSound);
+  unlock.volume = 0;
+  unlock.play().then(() => {
+    unlock.pause();
+    unlock.currentTime = 0;
+  }).catch(() => {});
+};
+
+if (typeof window !== "undefined") {
+  const unlockEvents = ["pointerdown", "keydown", "touchstart"] as const;
+  const handleFirstInteraction = () => {
+    unlockAudio();
+    unlockEvents.forEach((event) => window.removeEventListener(event, handleFirstInteraction));
+  };
+  unlockEvents.forEach((event) => window.addEventListener(event, handleFirstInteraction));
+}
 
 const activeSounds = new Set<HTMLAudioElement>();
 

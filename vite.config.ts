@@ -4,9 +4,13 @@ import { version } from "./package.json";
 
 // @ts-expect-error process is a nodejs global
 const host = process.env.TAURI_DEV_HOST;
+// @ts-expect-error process is a nodejs global
+const basePath = process.env.VITE_BASE_PATH || "/";
 
 // https://vite.dev/config/
 export default defineConfig(async () => ({
+  base: basePath,
+
   plugins: [react()],
 
   define: {

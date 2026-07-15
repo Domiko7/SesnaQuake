@@ -2,6 +2,7 @@ import { getColorPga, getColorPgv, getCwaShindoIntensity } from "../lib/transfor
 import { getSettings } from "../lib/settings";
 import { getIntensityFromMotion, geonetMmiToPgv, iconFamilyForScale, type ForceableScale } from "../lib/intensityFromMotion";
 import { shindoToPgv } from "../lib/sources/utils";
+import { assetUrl } from "../lib/assetUrl";
 import { getMap } from "./mapInstance";
 import type { Feature, FeatureCollection, Point, GeoJsonProperties } from "geojson";
 import type { StnPacket } from "../lib/wsTypes";
@@ -37,7 +38,7 @@ const loadIntensityIcons = () => {
     img.onload = () => {
       if (!map.hasImage(`stn-int-${i}`)) map.addImage(`stn-int-${i}`, img);
     };
-    img.src = `images/s${i}.svg`;
+    img.src = assetUrl(`images/s${i}.svg`);
   }
 };
 
@@ -48,7 +49,7 @@ const loadMmiIntensityIcons = () => {
     img.onload = () => {
       if (!map.hasImage(`mmi-int-${i}`)) map.addImage(`mmi-int-${i}`, img);
     };
-    img.src = `images/m${i}.svg`;
+    img.src = assetUrl(`images/m${i}.svg`);
   }
 };
 

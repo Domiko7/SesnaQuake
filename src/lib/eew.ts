@@ -10,6 +10,7 @@ import { computeHomeImpact } from "./homeImpact";
 import { getSettings } from "./settings";
 import { useAppStore } from "../store";
 import { eqSound, updateSound, eew2Sound, eew5Sound, alertSound, resolveAlertStrongSound } from "./sounds";
+import { assetUrl } from "./assetUrl";
 import type { EewPacket, EewCancelPacket, EewData } from "./wsTypes";
 
 interface EewInternal {
@@ -90,7 +91,7 @@ const addEEW = (data: EewPacket): void => {
   notify(intensity.number, intensity.type, `EEW - ${agency.toUpperCase()}`, mag, depth, originTime, location);
 
   updateShakemap(id, lat, lon, mag, depth);
-  placeMarker(lon, lat, "60px", "60px", id, "images/epicenter.png");
+  placeMarker(lon, lat, "60px", "60px", id, assetUrl("images/epicenter.png"));
 
   if (internals.size > 1) startSwitching();
 
@@ -129,7 +130,7 @@ const updateEEW = (data: EewPacket): void => {
 
   updateShakemap(id, lat, lon, mag, depth);
   deleteMarker(id);
-  placeMarker(lon, lat, "60px", "60px", id, "images/epicenter.png");
+  placeMarker(lon, lat, "60px", "60px", id, assetUrl("images/epicenter.png"));
   if (shouldAnnounce) announce(data.data, false);
   if (getSettings().soundUpdateEnabled) playSound(updateSound);
 };
