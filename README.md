@@ -78,7 +78,7 @@ npm run tauri build  # desktop app production bundle
 Sound effects & station intensities (images) by kotoho7, used under CC BY-SA 2.0
 https://creativecommons.org/licenses/by-sa/2.0/
 
-Earthquake alert tones (etws_earthquake.ogg, etws_default.ogg), converted to MP3, from the Android
+Earthquake alert tones (etws_earthquake.ogg, etws_default.ogg, watch_info.ogg), converted to MP3, from the Android
 Open Source Project (CellBroadcastReceiver), used under the Apache License 2.0
 https://www.apache.org/licenses/LICENSE-2.0
 
