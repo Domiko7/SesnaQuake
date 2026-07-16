@@ -20,6 +20,7 @@
         { "url": "https://earthquake.usgs.gov/*" },
         { "url": "https://api.geonet.org.nz/*" },
         { "url": "https://squad-snaking-registry.ngrok-free.dev/*" },
+        { "url": "https://breq.pp.ua/*" },
         { "url": "https://api.elevenlabs.io/*" },
         { "url": "https://*.tts.speech.microsoft.com/*" },
         { "url": "https://api.openai.com/*" },
