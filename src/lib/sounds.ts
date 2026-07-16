@@ -22,4 +22,5 @@ const ALERT_STRONG_BY_LOCALE: Record<string, string> = {
   "pt-BR": alertStrongSoundPt,
 };
 
-export const resolveAlertStrongSound = (language: string): string => ALERT_STRONG_BY_LOCALE[language] ?? alertStrongSound;
+export const resolveAlertStrongSound = (language: string, custom?: string): string =>
+  custom || ALERT_STRONG_BY_LOCALE[language] || alertStrongSound;

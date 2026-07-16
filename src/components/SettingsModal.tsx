@@ -14,15 +14,35 @@ interface SettingsModalProps {
   onClose: () => void;
 }
 
-const SOUND_TEST_SOURCES: Record<string, (language: string) => string> = {
-  soundEqEnabled: () => eqSound,
-  soundUpdateEnabled: () => updateSound,
-  soundEew2Enabled: () => eew2Sound,
-  soundEew5Enabled: () => eew5Sound,
-  soundReportEnabled: () => reportSound,
-  soundAlertEnabled: () => alertSound,
-  soundAlertStrongEnabled: (language) => resolveAlertStrongSound(language),
+const SOUND_TEST_SOURCES: Record<string, (language: string, custom?: string) => string> = {
+  soundEqEnabled: (_language, custom) => custom || eqSound,
+  soundUpdateEnabled: (_language, custom) => custom || updateSound,
+  soundEew2Enabled: (_language, custom) => custom || eew2Sound,
+  soundEew5Enabled: (_language, custom) => custom || eew5Sound,
+  soundReportEnabled: (_language, custom) => custom || reportSound,
+  soundAlertEnabled: (_language, custom) => custom || alertSound,
+  soundAlertStrongEnabled: (language, custom) => resolveAlertStrongSound(language, custom),
 };
+
+const CUSTOM_SOUND_FIELD: Record<string, string> = {
+  soundEqEnabled: "customSoundEq",
+  soundUpdateEnabled: "customSoundUpdate",
+  soundEew2Enabled: "customSoundEew2",
+  soundEew5Enabled: "customSoundEew5",
+  soundReportEnabled: "customSoundReport",
+  soundAlertEnabled: "customSoundAlert",
+  soundAlertStrongEnabled: "customSoundAlertStrong",
+};
+
+const MAX_CUSTOM_SOUND_BYTES = 500 * 1024;
+
+const readFileAsDataUrl = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
 
 export const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
   const { t, i18n } = useTranslation();
@@ -90,7 +110,23 @@ export const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
   const handleTestSound = (fieldKey: string) => {
     const resolveSound = SOUND_TEST_SOURCES[fieldKey];
     if (!resolveSound) return;
-    playSound(resolveSound(values.language || i18n.language));
+    const customKey = CUSTOM_SOUND_FIELD[fieldKey];
+    const volume = Number(values.soundVolume ?? "100");
+    playSound(resolveSound(values.language || i18n.language, customKey ? values[customKey] : undefined), volume);
+  };
+
+  const handleCustomSoundChange = async (customKey: string, file: File | null) => {
+    if (!file) return;
+    if (file.size > MAX_CUSTOM_SOUND_BYTES) {
+      window.alert(t("settingsSoundFileTooLarge", { size: Math.round(MAX_CUSTOM_SOUND_BYTES / 1024) }));
+      return;
+    }
+    try {
+      const dataUrl = await readFileAsDataUrl(file);
+      setValue(customKey, dataUrl);
+    } catch (err) {
+      console.error("Failed to read custom sound file:", err);
+    }
   };
 
   if (!open) return null;
@@ -126,7 +162,11 @@ export const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
             <section className="settings-group" key={section.titleKey}>
               <h3 className="settings-group__title">{t(section.titleKey)}</h3>
               <div className="settings-group__grid">
-                {section.fields.filter((field) => field.visibleWhen?.(values) ?? true).map((field) => (
+                {section.fields.filter((field) => !field.hidden && (field.visibleWhen?.(values) ?? true)).map((field) => {
+                  const customKey = CUSTOM_SOUND_FIELD[field.key];
+                  const customValue = customKey ? values[customKey] : undefined;
+
+                  return (
                   <div className="settings-field" key={field.key}>
                     <label htmlFor={`setting-${field.key}`}>{t(field.labelKey)}</label>
                     {field.type === "select" ? (
@@ -143,6 +183,19 @@ export const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
                           <option key={option.value} value={option.value}>{optionLabel(option)}</option>
                         ))}
                       </select>
+                    ) : field.type === "range" ? (
+                      <div className="settings-range">
+                        <input
+                          id={`setting-${field.key}`}
+                          type="range"
+                          min={field.min}
+                          max={field.max}
+                          step={field.step}
+                          value={values[field.key] ?? field.default}
+                          onChange={(e) => setValue(field.key, e.target.value)}
+                        />
+                        <span className="settings-range__value">{values[field.key] ?? field.default}%</span>
+                      </div>
                     ) : (
                       <input
                         id={`setting-${field.key}`}
@@ -153,13 +206,38 @@ export const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
                         onChange={(e) => setValue(field.key, e.target.value)}
                       />
                     )}
-                    {SOUND_TEST_SOURCES[field.key] && (
-                      <button type="button" className="settings-sound-test" onClick={() => handleTestSound(field.key)}>
-                        {t("settingsSoundTest")}
-                      </button>
+                    {(SOUND_TEST_SOURCES[field.key] || customKey) && (
+                      <div className="settings-field__actions">
+                        {SOUND_TEST_SOURCES[field.key] && (
+                          <button type="button" className="settings-sound-test" onClick={() => handleTestSound(field.key)}>
+                            {t("settingsSoundTest")}
+                          </button>
+                        )}
+                        {customKey && (
+                          <>
+                            <label className="settings-sound-replace">
+                              {customValue ? t("settingsSoundReplace") : t("settingsSoundUpload")}
+                              <input
+                                type="file"
+                                accept="audio/*"
+                                onChange={(e) => {
+                                  handleCustomSoundChange(customKey, e.target.files?.[0] ?? null);
+                                  e.target.value = "";
+                                }}
+                              />
+                            </label>
+                            {customValue && (
+                              <button type="button" className="settings-sound-reset" onClick={() => setValue(customKey, "")}>
+                                {t("settingsSoundReset")}
+                              </button>
+                            )}
+                          </>
+                        )}
+                      </div>
                     )}
                   </div>
-                ))}
+                  );
+                })}
               </div>
               {section.titleKey === "settingsVoice" && (
                 <button type="button" className="settings-tts-test" onClick={handleTestTts}>

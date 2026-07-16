@@ -186,7 +186,7 @@ html, body {
 .elements {
   display: flex;
   position: fixed;
-  z-index: 100;
+  z-index: 1000;
   right: 0;
   bottom: 0;
   margin: 0.3rem;
@@ -248,7 +248,7 @@ html, body {
 #settings-banner {
   position: fixed;
   inset: 0;
-  z-index: 200;
+  z-index: 2000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -420,9 +420,17 @@ html, body {
   outline-offset: 1px;
 }
 
-.settings-sound-test {
-  align-self: flex-start;
+.settings-field__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   margin-top: 0.1rem;
+}
+
+.settings-sound-test,
+.settings-sound-replace,
+.settings-sound-reset {
+  align-self: flex-start;
   padding: 0.3rem 0.85rem;
   font: inherit;
   font-size: 0.8rem;
@@ -434,14 +442,58 @@ html, body {
   cursor: pointer;
 }
 
-.settings-sound-test:hover {
+.settings-sound-test:hover,
+.settings-sound-replace:hover,
+.settings-sound-reset:hover {
   background: #333333;
   border-color: #4a4a4a;
 }
 
-.settings-sound-test:focus-visible {
+.settings-sound-test:focus-visible,
+.settings-sound-replace:focus-within,
+.settings-sound-reset:focus-visible {
   outline: 2px solid #19b0c8;
   outline-offset: 1px;
+}
+
+.settings-sound-replace {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.settings-sound-replace input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.settings-range {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.settings-range input[type="range"] {
+  flex: 1;
+  width: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  accent-color: #19b0c8;
+}
+
+.settings-range__value {
+  min-width: 2.75rem;
+  text-align: right;
+  font-size: 0.85rem;
+  color: #ececec;
 }
 
 

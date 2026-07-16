@@ -19,8 +19,9 @@ export const eq = (data: EqPacket): void => {
 
   const isWarmedUp = Date.now() - startedAt > WARMUP_MS;
   const isOffCooldown = Date.now() - lastReportSoundAt > REPORT_SOUND_COOLDOWN_MS;
-  if (isNew && isLatest && isWarmedUp && isOffCooldown && getSettings().soundReportEnabled) {
+  const settings = getSettings();
+  if (isNew && isLatest && isWarmedUp && isOffCooldown && settings.soundReportEnabled) {
     lastReportSoundAt = Date.now();
-    playSound(reportSound);
+    playSound(settings.customSoundReport || reportSound);
   }
 };

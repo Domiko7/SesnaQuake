@@ -37,9 +37,9 @@ const checkAlertThresholds = (prevIntensity: number | null, newIntensity: number
   const prev = prevIntensity ?? -Infinity;
 
   if (newIntensity >= settings.alertStrongThreshold && prev < settings.alertStrongThreshold) {
-    if (settings.soundAlertStrongEnabled) playSound(resolveAlertStrongSound(i18n.language));
+    if (settings.soundAlertStrongEnabled) playSound(resolveAlertStrongSound(i18n.language, settings.customSoundAlertStrong));
   } else if (newIntensity >= settings.alertThreshold && prev < settings.alertThreshold) {
-    if (settings.soundAlertEnabled) playSound(alertSound);
+    if (settings.soundAlertEnabled) playSound(settings.customSoundAlert || alertSound);
   }
 };
 
@@ -68,8 +68,8 @@ const addEEW = (data: EewPacket): void => {
   const { agency, id, location, lat, lon, mag, depth, originTime, announcedTime, intensity } = data.data;
 
   const soundSettings = getSettings();
-  if (intensity.number >= 3 && soundSettings.soundEew2Enabled) playSound(eew2Sound);
-  if (intensity.number >= 5 && soundSettings.soundEew5Enabled) playSound(eew5Sound);
+  if (intensity.number >= 3 && soundSettings.soundEew2Enabled) playSound(soundSettings.customSoundEew2 || eew2Sound);
+  if (intensity.number >= 5 && soundSettings.soundEew5Enabled) playSound(soundSettings.customSoundEew5 || eew5Sound);
 
   checkAlertThresholds(null, homeIntensityFor(data.data));
 
@@ -93,7 +93,7 @@ const addEEW = (data: EewPacket): void => {
 
   if (internals.size > 1) startSwitching();
 
-  if (soundSettings.soundEqEnabled) playSound(eqSound);
+  if (soundSettings.soundEqEnabled) playSound(soundSettings.customSoundEq || eqSound);
 };
 
 const updateEEW = (data: EewPacket): void => {
@@ -110,8 +110,8 @@ const updateEEW = (data: EewPacket): void => {
       prevData.location !== location;
 
     const soundSettings = getSettings();
-    if (intensity.number >= 3 && prevData.intensity.number < 3 && soundSettings.soundEew2Enabled) playSound(eew2Sound);
-    if (intensity.number >= 5 && prevData.intensity.number < 5 && soundSettings.soundEew5Enabled) playSound(eew5Sound);
+    if (intensity.number >= 3 && prevData.intensity.number < 3 && soundSettings.soundEew2Enabled) playSound(soundSettings.customSoundEew2 || eew2Sound);
+    if (intensity.number >= 5 && prevData.intensity.number < 5 && soundSettings.soundEew5Enabled) playSound(soundSettings.customSoundEew5 || eew5Sound);
 
     checkAlertThresholds(homeIntensityFor(prevData), homeIntensityFor(data.data));
 
@@ -128,7 +128,8 @@ const updateEEW = (data: EewPacket): void => {
   deleteMarker(id);
   placeMarker(lon, lat, "60px", "60px", id, assetUrl("images/epicenter.png"));
   if (shouldAnnounce) announce(data.data, false);
-  if (getSettings().soundUpdateEnabled) playSound(updateSound);
+  const updateSoundSettings = getSettings();
+  if (updateSoundSettings.soundUpdateEnabled) playSound(updateSoundSettings.customSoundUpdate || updateSound);
 };
 
 export const deleteEEW = (id: string): void => {

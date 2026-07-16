@@ -152,8 +152,10 @@ if (typeof window !== "undefined") {
 
 const activeSounds = new Set<HTMLAudioElement>();
 
-export const playSound = (sound: string) => {
+export const playSound = (sound: string, volume?: number) => {
   const audio = new Audio(sound);
+  const volumePercent = volume ?? getSettings().soundVolume;
+  audio.volume = Math.min(1, Math.max(0, volumePercent / 100));
   activeSounds.add(audio);
 
   audio.play()

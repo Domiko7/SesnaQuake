@@ -11,13 +11,17 @@ export type SettingValueType = "string" | "number" | "boolean";
 export interface SettingField {
   key: string;
   labelKey: string;
-  type: "select" | "text";
+  type: "select" | "text" | "range" | "file";
   valueType?: SettingValueType;
   default: string;
   options?: SettingOption[] | ((values: Record<string, string>) => SettingOption[]);
   refreshOn?: string[];
   inputMode?: string;
   visibleWhen?: (values: Record<string, string>) => boolean;
+  hidden?: boolean;
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
 export interface SettingSection {
@@ -215,6 +219,16 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
     titleKey: "settingsSounds",
     fields: [
       {
+        key: "soundVolume",
+        labelKey: "settingsSoundVolume",
+        type: "range",
+        valueType: "number",
+        default: "100",
+        min: 0,
+        max: 100,
+        step: 5
+      },
+      {
         key: "soundEqEnabled",
         labelKey: "settingsSoundEq",
         type: "select",
@@ -225,6 +239,7 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "off", labelKey: "settingsDisabled" }
         ]
       },
+      { key: "customSoundEq", labelKey: "settingsSoundEq", type: "file", default: "", hidden: true },
       {
         key: "soundUpdateEnabled",
         labelKey: "settingsSoundUpdate",
@@ -236,6 +251,7 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "off", labelKey: "settingsDisabled" }
         ]
       },
+      { key: "customSoundUpdate", labelKey: "settingsSoundUpdate", type: "file", default: "", hidden: true },
       {
         key: "soundEew2Enabled",
         labelKey: "settingsSoundEew2",
@@ -247,6 +263,7 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "off", labelKey: "settingsDisabled" }
         ]
       },
+      { key: "customSoundEew2", labelKey: "settingsSoundEew2", type: "file", default: "", hidden: true },
       {
         key: "soundEew5Enabled",
         labelKey: "settingsSoundEew5",
@@ -258,6 +275,7 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "off", labelKey: "settingsDisabled" }
         ]
       },
+      { key: "customSoundEew5", labelKey: "settingsSoundEew5", type: "file", default: "", hidden: true },
       {
         key: "soundReportEnabled",
         labelKey: "settingsSoundReport",
@@ -269,6 +287,7 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "off", labelKey: "settingsDisabled" }
         ]
       },
+      { key: "customSoundReport", labelKey: "settingsSoundReport", type: "file", default: "", hidden: true },
       {
         key: "soundAlertEnabled",
         labelKey: "settingsSoundAlert",
@@ -280,6 +299,7 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "off", labelKey: "settingsDisabled" }
         ]
       },
+      { key: "customSoundAlert", labelKey: "settingsSoundAlert", type: "file", default: "", hidden: true },
       {
         key: "soundAlertStrongEnabled",
         labelKey: "settingsSoundAlertStrong",
@@ -290,7 +310,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
-      }
+      },
+      { key: "customSoundAlertStrong", labelKey: "settingsSoundAlertStrong", type: "file", default: "", hidden: true }
     ]
   },
   {
@@ -768,6 +789,7 @@ export interface AppSettings {
   alertStrongThreshold: number;
   alertIntensityType: "shindo" | "mmi" | "csis" | "cwasis";
   forceIntensity: "off" | "shindo" | "mmi" | "csis" | "cwasis" | "geonet_mmi";
+  soundVolume: number;
   soundEqEnabled: boolean;
   soundUpdateEnabled: boolean;
   soundEew2Enabled: boolean;
@@ -775,6 +797,13 @@ export interface AppSettings {
   soundReportEnabled: boolean;
   soundAlertEnabled: boolean;
   soundAlertStrongEnabled: boolean;
+  customSoundEq: string;
+  customSoundUpdate: string;
+  customSoundEew2: string;
+  customSoundEew5: string;
+  customSoundReport: string;
+  customSoundAlert: string;
+  customSoundAlertStrong: string;
   ttsEnabled: boolean;
   ttsEngine: "browser" | "azure" | "elevenlabs" | "openai";
   ttsVoice: string;
