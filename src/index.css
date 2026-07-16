@@ -423,6 +423,30 @@ html, body {
   margin-top: 0.1rem;
 }
 
+.settings-field__minmag {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.settings-field__minmag label {
+  font-size: 0.85rem;
+  color: #9a9a9a;
+}
+
+.settings-field__minmag input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.55rem 0.75rem;
+  font: inherit;
+  font-size: 0.95rem;
+  color: #ececec;
+  background-color: #1f1f1f;
+  border: 1px solid #3a3a3a;
+  border-radius: 6px;
+}
+
 .settings-sound-test,
 .settings-sound-replace,
 .settings-sound-reset {

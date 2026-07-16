@@ -34,6 +34,36 @@ const CUSTOM_SOUND_FIELD: Record<string, string> = {
   soundAlertStrongEnabled: "customSoundAlertStrong",
 };
 
+const MIN_MAG_FIELD: Record<string, string> = {
+  sourceWolfxJma: "minMagWolfxJma",
+  sourceWolfxSc: "minMagWolfxSc",
+  sourceWolfxCenc: "minMagWolfxCenc",
+  sourceWolfxFj: "minMagWolfxFj",
+  sourceWolfxCq: "minMagWolfxCq",
+  sourceKmaEew: "minMagKmaEew",
+  sourceShakealert: "minMagShakealert",
+  sourceExptechCwa: "minMagExptechCwa",
+  sourceExptechNied: "minMagExptechNied",
+  sourceCwaReport: "minMagCwaReport",
+  sourceKmaReport: "minMagKmaReport",
+  sourceCenc: "minMagCenc",
+  sourceJma: "minMagJma",
+  sourceEmsc: "minMagEmsc",
+  sourceUsgs: "minMagUsgs",
+  sourceBcsf: "minMagBcsf",
+  sourceHko: "minMagHko",
+  sourceGfz: "minMagGfz",
+  sourceUsp: "minMagUsp",
+  sourceFssn: "minMagFssn",
+  sourceNingxia: "minMagNingxia",
+  sourceGuangxi: "minMagGuangxi",
+  sourceShanxi: "minMagShanxi",
+  sourceBeijing: "minMagBeijing",
+  sourceYunnan: "minMagYunnan",
+  sourceGeonet: "minMagGeonet",
+  sourceBreq: "minMagBreq",
+};
+
 const MAX_CUSTOM_SOUND_BYTES = 500 * 1024;
 
 const readFileAsDataUrl = (file: File): Promise<string> =>
@@ -165,6 +195,7 @@ export const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
                 {section.fields.filter((field) => !field.hidden && (field.visibleWhen?.(values) ?? true)).map((field) => {
                   const customKey = CUSTOM_SOUND_FIELD[field.key];
                   const customValue = customKey ? values[customKey] : undefined;
+                  const minMagKey = MIN_MAG_FIELD[field.key];
 
                   return (
                   <div className="settings-field" key={field.key}>
@@ -238,6 +269,19 @@ export const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
                             )}
                           </>
                         )}
+                      </div>
+                    )}
+                    {minMagKey && (
+                      <div className="settings-field__minmag">
+                        <label htmlFor={`setting-${minMagKey}`}>{t("settingsMinMag")}</label>
+                        <input
+                          id={`setting-${minMagKey}`}
+                          type="text"
+                          autoComplete="off"
+                          inputMode="decimal"
+                          value={values[minMagKey] ?? ""}
+                          onChange={(e) => setValue(minMagKey, e.target.value)}
+                        />
                       </div>
                     )}
                   </div>

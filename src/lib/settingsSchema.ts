@@ -442,7 +442,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceWolfxSc",
@@ -461,7 +462,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceWolfxCenc",
@@ -480,7 +482,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceWolfxFj",
@@ -499,7 +502,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceWolfxCq",
@@ -518,7 +522,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceKmaEew",
@@ -537,7 +542,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceShakealert",
@@ -556,7 +562,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceExptechCwa",
@@ -575,7 +582,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceExptechNied",
@@ -594,7 +602,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceCwaReport",
@@ -613,7 +622,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceKmaReport",
@@ -632,7 +642,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceCenc",
@@ -651,7 +662,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceJma",
@@ -670,7 +682,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceEmsc",
@@ -689,7 +702,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceUsgs",
@@ -708,7 +722,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceBcsf",
@@ -727,7 +742,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceHko",
@@ -746,7 +762,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceGfz",
@@ -765,7 +782,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceUsp",
@@ -784,7 +802,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceFssn",
@@ -803,7 +822,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceNingxia",
@@ -822,7 +842,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceGuangxi",
@@ -841,7 +862,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceShanxi",
@@ -860,7 +882,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceBeijing",
@@ -879,7 +902,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceYunnan",
@@ -898,7 +922,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceGeonet",
@@ -917,7 +942,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceGeonetFeltReports",
@@ -947,7 +973,8 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         type: "text",
         valueType: "number",
         default: "-99",
-        inputMode: "decimal"
+        inputMode: "decimal",
+        hidden: true
       },
       {
         key: "sourceKmoni",
