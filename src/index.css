@@ -2,9 +2,7 @@
 :root {
   --widget-bg: #333439;
   --widget-top-bg: #3a3a3a;
-  /*--event-panel-bg: #4f3437;*/
   --event-panel-top-bg: #3a3a3a;
-  /* matches #event-panel's rendered width (2 * 18rem padding); the shared border now lives on .left-panel */
   --left-panel-width: 36rem;
 }
 
@@ -25,8 +23,6 @@ html, body {
   position: absolute;
   top: 0;
   left: 0;
-  /*width: calc(100% - 400px);
-  height: 100vh;*/
   width: 100vw;
   height: 100vh;
   z-index: 1;
@@ -713,12 +709,12 @@ html, body {
   box-sizing: border-box;
   text-align: center;
   overflow: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 #info::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Opera */
+  display: none;
 }
 
 .past-event {

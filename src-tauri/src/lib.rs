@@ -59,9 +59,6 @@ pub fn run() {
             Ok(())
         })
         .on_window_event(|window, event| {
-            // Closing the window hides it to the tray instead of quitting, so
-            // EEW monitoring keeps running in the background. Actual exit
-            // only happens via the tray menu's "Quit" item.
             if let WindowEvent::CloseRequested { api, .. } = event {
                 let _ = window.hide();
                 api.prevent_close();
