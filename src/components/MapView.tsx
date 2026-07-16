@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { createMap, onMapReady } from "../map/mapInstance";
+import { createMap, getMap, onMapReady } from "../map/mapInstance";
 import { useAppStore } from "../store";
 
 export const MapView = () => {
@@ -8,10 +8,15 @@ export const MapView = () => {
 
   useEffect(() => {
     if (!containerRef.current) return;
+    const container = containerRef.current;
 
-    createMap(containerRef.current);
+    createMap(container);
     onMapReady(() => setMapReady(true));
-    
+
+    const resizeObserver = new ResizeObserver(() => getMap().resize());
+    resizeObserver.observe(container);
+
+    return () => resizeObserver.disconnect();
   }, [setMapReady]);
 
   return <div id="map" ref={containerRef} />;
