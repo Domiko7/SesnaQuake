@@ -1,6 +1,7 @@
 import { corsFetch } from "./http";
 import { dispatchMessage } from "./dispatch";
 import { resolveIntensity } from "./utils";
+import { getSettings } from "../settings";
 import { useAppStore } from "../../store";
 import type { EqPacket, Intensity } from "../wsTypes";
 
@@ -88,8 +89,11 @@ const refreshCencEqs = async (): Promise<void> => {
 
   keysToForward.sort((a, b) => cencEqs.get(a)!.data.time - cencEqs.get(b)!.data.time);
 
+  const minMag = getSettings().minMagCenc;
   for (const key of keysToForward) {
-    dispatchMessage(cencEqs.get(key)!);
+    const msg = cencEqs.get(key)!;
+    if (msg.data.mag < minMag) continue;
+    dispatchMessage(msg);
   }
 
   if (cencEqs.size > 100) {

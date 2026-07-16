@@ -3,6 +3,7 @@ import { corsFetch } from "./http";
 import { dispatchMessage } from "./dispatch";
 import { shindoToIntensity, resolveIntensity } from "./utils";
 import jmaStations from "./assets/jma_stations.json";
+import { getSettings } from "../settings";
 import { useAppStore } from "../../store";
 import type { EqPacket } from "../wsTypes";
 
@@ -174,8 +175,11 @@ const refreshJmaEqs = async (): Promise<void> => {
 
   keysToForward.sort((a, b) => jmaEqs.get(a)!.data.time - jmaEqs.get(b)!.data.time);
 
+  const minMag = getSettings().minMagJma;
   for (const key of keysToForward) {
-    dispatchMessage(jmaEqs.get(key)!);
+    const msg = jmaEqs.get(key)!;
+    if (msg.data.mag < minMag) continue;
+    dispatchMessage(msg);
   }
 
   if (jmaEqs.size > 100) {

@@ -104,6 +104,7 @@
   "settingsUiZoomAuto": "Auto-detect",
   "settingsReloadNote": "Saving reloads the app",
   "settingsSources": "Data sources",
+  "settingsMinMag": "Min. magnitude",
   "settingsSourceWolfxJma": "JMA EEW (Wolfx)",
   "settingsSourceWolfxSc": "Sichuan EEW (Wolfx)",
   "settingsSourceWolfxCenc": "CENC EEW (Wolfx)",

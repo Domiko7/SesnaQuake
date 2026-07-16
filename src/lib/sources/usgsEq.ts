@@ -1,6 +1,7 @@
 import { corsFetch } from "./http";
 import { dispatchMessage } from "./dispatch";
 import { estimateMaxMMI, resolveIntensity } from "./utils";
+import { getSettings } from "../settings";
 import { useAppStore } from "../../store";
 import type { EqPacket } from "../wsTypes";
 
@@ -78,8 +79,11 @@ const refreshUsgsEqs = async (): Promise<void> => {
 
   keysToForward.sort((a, b) => usgsEqs.get(a)!.data.time - usgsEqs.get(b)!.data.time);
 
+  const minMag = getSettings().minMagUsgs;
   for (const key of keysToForward) {
-    dispatchMessage(usgsEqs.get(key)!);
+    const msg = usgsEqs.get(key)!;
+    if (msg.data.mag < minMag) continue;
+    dispatchMessage(msg);
   }
 
   if (usgsEqs.size > 100) {

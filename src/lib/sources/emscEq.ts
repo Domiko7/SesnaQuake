@@ -1,6 +1,7 @@
 import { corsFetch } from "./http";
 import { dispatchMessage } from "./dispatch";
 import { estimateMaxMMI, resolveIntensity } from "./utils";
+import { getSettings } from "../settings";
 import { useAppStore } from "../../store";
 import type { EqPacket } from "../wsTypes";
 
@@ -80,8 +81,11 @@ const refreshEmscEqs = async (): Promise<void> => {
 
   keysToForward.sort((a, b) => emscEqs.get(a)!.data.time - emscEqs.get(b)!.data.time);
 
+  const minMag = getSettings().minMagEmsc;
   for (const key of keysToForward) {
-    dispatchMessage(emscEqs.get(key)!);
+    const msg = emscEqs.get(key)!;
+    if (msg.data.mag < minMag) continue;
+    dispatchMessage(msg);
   }
 
   if (emscEqs.size > 100) {

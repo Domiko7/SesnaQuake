@@ -2,6 +2,7 @@ import { corsFetch } from "./http";
 import { dispatchMessage } from "./dispatch";
 import { parseQuakeMl } from "./quakeml";
 import { estimateMaxMMI, resolveIntensity } from "./utils";
+import { getSettings } from "../settings";
 import { useAppStore } from "../../store";
 import type { EqPacket } from "../wsTypes";
 
@@ -64,8 +65,11 @@ const refreshBreqEqs = async (): Promise<void> => {
 
   keysToForward.sort((a, b) => breqEqs.get(a)!.data.time - breqEqs.get(b)!.data.time);
 
+  const minMag = getSettings().minMagBreq;
   for (const key of keysToForward) {
-    dispatchMessage(breqEqs.get(key)!);
+    const msg = breqEqs.get(key)!;
+    if (msg.data.mag < minMag) continue;
+    dispatchMessage(msg);
   }
 
   if (breqEqs.size > 100) {

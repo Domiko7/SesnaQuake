@@ -27,6 +27,7 @@ const handleMessage = async (e: MessageEvent) => {
 
     if (data.type === "jma_eew") {
       if (!getSettings().sourceWolfxJma) return;
+      if (!data.isCancel && data.Magunitude < getSettings().minMagWolfxJma) return;
       if (data.isCancel) {
         dispatchMessage({ type: "eewCancel", data: { id: data.EventID } });
         return;
@@ -51,6 +52,7 @@ const handleMessage = async (e: MessageEvent) => {
       });
     } else if (data.type === "sc_eew") {
       if (!getSettings().sourceWolfxSc) return;
+      if (data.Magunitude < getSettings().minMagWolfxSc) return;
       dispatchMessage({
         type: "eew",
         data: {
@@ -71,6 +73,7 @@ const handleMessage = async (e: MessageEvent) => {
       });
     } else if (data.type === "cenc_eew") {
       if (!getSettings().sourceWolfxCenc) return;
+      if (data.Magnitude < getSettings().minMagWolfxCenc) return;
       dispatchMessage({
         type: "eew",
         data: {
@@ -91,6 +94,7 @@ const handleMessage = async (e: MessageEvent) => {
       });
     } else if (data.type === "fj_eew") {
       if (!getSettings().sourceWolfxFj) return;
+      if (data.Magunitude < getSettings().minMagWolfxFj) return;
       const estimated = await estimateMaxCsis(data.Magunitude, 10, data.Latitude, data.Longitude);
       dispatchMessage({
         type: "eew",
@@ -112,6 +116,7 @@ const handleMessage = async (e: MessageEvent) => {
       });
     } else if (data.type === "cq_eew") {
       if (!getSettings().sourceWolfxCq) return;
+      if (data.Magnitude < getSettings().minMagWolfxCq) return;
       dispatchMessage({
         type: "eew",
         data: {

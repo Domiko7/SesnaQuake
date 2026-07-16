@@ -437,6 +437,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         ]
       },
       {
+        key: "minMagWolfxJma",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
+      },
+      {
         key: "sourceWolfxSc",
         labelKey: "settingsSourceWolfxSc",
         type: "select",
@@ -446,6 +454,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
+      },
+      {
+        key: "minMagWolfxSc",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
       },
       {
         key: "sourceWolfxCenc",
@@ -459,6 +475,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         ]
       },
       {
+        key: "minMagWolfxCenc",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
+      },
+      {
         key: "sourceWolfxFj",
         labelKey: "settingsSourceWolfxFj",
         type: "select",
@@ -468,6 +492,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
+      },
+      {
+        key: "minMagWolfxFj",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
       },
       {
         key: "sourceWolfxCq",
@@ -481,6 +513,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         ]
       },
       {
+        key: "minMagWolfxCq",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
+      },
+      {
         key: "sourceKmaEew",
         labelKey: "settingsSourceKmaEew",
         type: "select",
@@ -490,6 +530,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
+      },
+      {
+        key: "minMagKmaEew",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
       },
       {
         key: "sourceShakealert",
@@ -503,6 +551,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         ]
       },
       {
+        key: "minMagShakealert",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
+      },
+      {
         key: "sourceExptechCwa",
         labelKey: "settingsSourceExptechCwa",
         type: "select",
@@ -512,6 +568,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
+      },
+      {
+        key: "minMagExptechCwa",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
       },
       {
         key: "sourceExptechNied",
@@ -525,6 +589,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         ]
       },
       {
+        key: "minMagExptechNied",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
+      },
+      {
         key: "sourceCwaReport",
         labelKey: "settingsSourceCwaReport",
         type: "select",
@@ -534,6 +606,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
+      },
+      {
+        key: "minMagCwaReport",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
       },
       {
         key: "sourceKmaReport",
@@ -547,6 +627,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         ]
       },
       {
+        key: "minMagKmaReport",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
+      },
+      {
         key: "sourceCenc",
         labelKey: "settingsSourceCenc",
         type: "select",
@@ -556,6 +644,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
+      },
+      {
+        key: "minMagCenc",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
       },
       {
         key: "sourceJma",
@@ -569,6 +665,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         ]
       },
       {
+        key: "minMagJma",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
+      },
+      {
         key: "sourceEmsc",
         labelKey: "settingsSourceEmsc",
         type: "select",
@@ -578,6 +682,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
+      },
+      {
+        key: "minMagEmsc",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
       },
       {
         key: "sourceUsgs",
@@ -591,6 +703,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         ]
       },
       {
+        key: "minMagUsgs",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
+      },
+      {
         key: "sourceBcsf",
         labelKey: "settingsSourceBcsf",
         type: "select",
@@ -600,6 +720,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
+      },
+      {
+        key: "minMagBcsf",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
       },
       {
         key: "sourceHko",
@@ -613,6 +741,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         ]
       },
       {
+        key: "minMagHko",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
+      },
+      {
         key: "sourceGfz",
         labelKey: "settingsSourceGfz",
         type: "select",
@@ -622,6 +758,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
+      },
+      {
+        key: "minMagGfz",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
       },
       {
         key: "sourceUsp",
@@ -635,6 +779,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         ]
       },
       {
+        key: "minMagUsp",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
+      },
+      {
         key: "sourceFssn",
         labelKey: "settingsSourceFssn",
         type: "select",
@@ -644,6 +796,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
+      },
+      {
+        key: "minMagFssn",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
       },
       {
         key: "sourceNingxia",
@@ -657,6 +817,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         ]
       },
       {
+        key: "minMagNingxia",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
+      },
+      {
         key: "sourceGuangxi",
         labelKey: "settingsSourceGuangxi",
         type: "select",
@@ -666,6 +834,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
+      },
+      {
+        key: "minMagGuangxi",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
       },
       {
         key: "sourceShanxi",
@@ -679,6 +855,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         ]
       },
       {
+        key: "minMagShanxi",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
+      },
+      {
         key: "sourceBeijing",
         labelKey: "settingsSourceBeijing",
         type: "select",
@@ -688,6 +872,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
+      },
+      {
+        key: "minMagBeijing",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
       },
       {
         key: "sourceYunnan",
@@ -701,6 +893,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         ]
       },
       {
+        key: "minMagYunnan",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
+      },
+      {
         key: "sourceGeonet",
         labelKey: "settingsSourceGeonet",
         type: "select",
@@ -710,6 +910,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
+      },
+      {
+        key: "minMagGeonet",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
       },
       {
         key: "sourceGeonetFeltReports",
@@ -732,6 +940,14 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
           { value: "on", labelKey: "settingsEnabled" },
           { value: "off", labelKey: "settingsDisabled" }
         ]
+      },
+      {
+        key: "minMagBreq",
+        labelKey: "settingsMinMag",
+        type: "text",
+        valueType: "number",
+        default: "-99",
+        inputMode: "decimal"
       },
       {
         key: "sourceKmoni",
@@ -844,6 +1060,33 @@ export interface AppSettings {
   sourceExptechStn: boolean;
   sourcePalert: boolean;
   sourceShakealert: boolean;
+  minMagWolfxJma: number;
+  minMagWolfxSc: number;
+  minMagWolfxCenc: number;
+  minMagWolfxFj: number;
+  minMagWolfxCq: number;
+  minMagKmaEew: number;
+  minMagShakealert: number;
+  minMagExptechCwa: number;
+  minMagExptechNied: number;
+  minMagCwaReport: number;
+  minMagKmaReport: number;
+  minMagCenc: number;
+  minMagJma: number;
+  minMagEmsc: number;
+  minMagUsgs: number;
+  minMagBcsf: number;
+  minMagHko: number;
+  minMagGfz: number;
+  minMagUsp: number;
+  minMagFssn: number;
+  minMagNingxia: number;
+  minMagGuangxi: number;
+  minMagShanxi: number;
+  minMagBeijing: number;
+  minMagYunnan: number;
+  minMagGeonet: number;
+  minMagBreq: number;
 }
 
 export const parseSettings = (raw: Record<string, string>): AppSettings => {

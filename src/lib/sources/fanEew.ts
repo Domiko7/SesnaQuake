@@ -60,6 +60,19 @@ const SIMPLE_EQ_SETTING_KEYS: Record<string, keyof AppSettings> = {
   fssn: "sourceFssn",
 };
 
+const SIMPLE_EQ_MINMAG_KEYS: Record<string, keyof AppSettings> = {
+  ningxia: "minMagNingxia",
+  guangxi: "minMagGuangxi",
+  shanxi: "minMagShanxi",
+  beijing: "minMagBeijing",
+  yunnan: "minMagYunnan",
+  hko: "minMagHko",
+  bcsf: "minMagBcsf",
+  gfz: "minMagGfz",
+  usp: "minMagUsp",
+  fssn: "minMagFssn",
+};
+
 const SIMPLE_EQ_SOURCES: EqData["source"][] = Object.keys(SIMPLE_EQ_SETTING_KEYS) as EqData["source"][];
 
 const buildCencFallback = async (d: FanEqData): Promise<EqData> => {
@@ -278,8 +291,11 @@ const primaryDown = (settingKey: keyof AppSettings, connectionKey: EewSource): b
 const handleSourceUpdate = async (source: string, Data: unknown): Promise<void> => {
   const d = Data as never;
 
+  const mag = (d as FanEqData).magnitude ?? 0;
+
   if ((SIMPLE_EQ_SOURCES as string[]).includes(source)) {
     if (!getSettings()[SIMPLE_EQ_SETTING_KEYS[source]]) return;
+    if (mag < (getSettings()[SIMPLE_EQ_MINMAG_KEYS[source]] as number)) return;
     dispatchMessage({ type: "eq", data: await buildGenericEq(source as EqData["source"], d) });
     return;
   }
@@ -287,39 +303,42 @@ const handleSourceUpdate = async (source: string, Data: unknown): Promise<void> 
   switch (source) {
     case "cwa":
       if (!getSettings().sourceCwaReport) return;
+      if (mag < getSettings().minMagCwaReport) return;
       dispatchMessage({ type: "eq", data: await buildCwa(d) });
       return;
     case "kma":
       if (!getSettings().sourceKmaReport) return;
+      if (mag < getSettings().minMagKmaReport) return;
       dispatchMessage({ type: "eq", data: await buildKma(d) });
       return;
     case "kma-eew":
       if (!getSettings().sourceKmaEew) return;
+      if (mag < getSettings().minMagKmaEew) return;
       dispatchMessage({ type: "eew", data: await buildKmaEew(d) });
       return;
     case "cenc":
-      if (primaryDown("sourceCenc", "cenc")) dispatchMessage({ type: "eq", data: await buildCencFallback(d) });
+      if (primaryDown("sourceCenc", "cenc") && mag >= getSettings().minMagCenc) dispatchMessage({ type: "eq", data: await buildCencFallback(d) });
       return;
     case "cea":
     case "cea-pr":
-      if (primaryDown("sourceWolfxCenc", "wolfx")) dispatchMessage({ type: "eew", data: await buildCeaEewFallback(d) });
+      if (primaryDown("sourceWolfxCenc", "wolfx") && mag >= getSettings().minMagWolfxCenc) dispatchMessage({ type: "eew", data: await buildCeaEewFallback(d) });
       return;
     case "cwa-eew":
-      if (primaryDown("sourceExptechCwa", "exptechEew")) dispatchMessage({ type: "eew", data: await buildCwaEewFallback(d) });
+      if (primaryDown("sourceExptechCwa", "exptechEew") && mag >= getSettings().minMagExptechCwa) dispatchMessage({ type: "eew", data: await buildCwaEewFallback(d) });
       return;
     case "jma":
       if (!primaryDown("sourceWolfxJma", "wolfx")) return;
       if ((d as FanJmaData).cancel) dispatchMessage({ type: "eewCancel", data: { id: (d as FanJmaData).id } });
-      else dispatchMessage({ type: "eew", data: await buildJmaFallback(d) });
+      else if (mag >= getSettings().minMagWolfxJma) dispatchMessage({ type: "eew", data: await buildJmaFallback(d) });
       return;
     case "sa":
-      if (primaryDown("sourceShakealert", "shakealert")) dispatchMessage({ type: "eew", data: await buildSaFallback(d) });
+      if (primaryDown("sourceShakealert", "shakealert") && mag >= getSettings().minMagShakealert) dispatchMessage({ type: "eew", data: await buildSaFallback(d) });
       return;
     case "emsc":
-      if (primaryDown("sourceEmsc", "emsc")) dispatchMessage({ type: "eq", data: await buildGenericEq("emsc", d) });
+      if (primaryDown("sourceEmsc", "emsc") && mag >= getSettings().minMagEmsc) dispatchMessage({ type: "eq", data: await buildGenericEq("emsc", d) });
       return;
     case "usgs":
-      if (primaryDown("sourceUsgs", "usgs")) dispatchMessage({ type: "eq", data: await buildGenericEq("usgs", d) });
+      if (primaryDown("sourceUsgs", "usgs") && mag >= getSettings().minMagUsgs) dispatchMessage({ type: "eq", data: await buildGenericEq("usgs", d) });
       return;
     default:
       return;

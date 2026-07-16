@@ -1,6 +1,7 @@
 import { corsFetch } from "./http";
 import { dispatchMessage } from "./dispatch";
 import { resolveIntensity } from "./utils";
+import { getSettings } from "../settings";
 import { useAppStore } from "../../store";
 import type { EewData } from "../wsTypes";
 
@@ -35,6 +36,7 @@ const refreshShakealertEew = async (): Promise<void> => {
     seenEvents.add(feature.id);
 
     if (isFirstPoll) continue;
+    if (feature.properties.mag < getSettings().minMagShakealert) continue;
 
     const [lon, lat, depth] = feature.geometry.coordinates;
     const intensity = await resolveIntensity(

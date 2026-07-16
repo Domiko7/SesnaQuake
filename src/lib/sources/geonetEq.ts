@@ -182,8 +182,11 @@ const refreshGeonetEqs = async (): Promise<void> => {
 
   keysToForward.sort((a, b) => geonetEqs.get(a)!.data.time - geonetEqs.get(b)!.data.time);
 
+  const minMag = getSettings().minMagGeonet;
   for (const key of keysToForward) {
-    dispatchMessage(geonetEqs.get(key)!);
+    const msg = geonetEqs.get(key)!;
+    if (msg.data.mag < minMag) continue;
+    dispatchMessage(msg);
   }
 
   if (geonetEqs.size > 100) {

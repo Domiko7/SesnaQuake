@@ -26,8 +26,8 @@ const refreshExptechEew = async (): Promise<void> => {
     const settings = getSettings();
     if (
       (!exptechEarthquakes.has(id) || exptechEarthquakes.get(id) !== serial) &&
-      ((author === "cwa" && settings.sourceExptechCwa) ||
-        (author === "nied" && settings.sourceExptechNied && !isWolfxConnected() && !isJmaCoveredByFan()))
+      ((author === "cwa" && settings.sourceExptechCwa && eq.mag >= settings.minMagExptechCwa) ||
+        (author === "nied" && settings.sourceExptechNied && eq.mag >= settings.minMagExptechNied && !isWolfxConnected() && !isJmaCoveredByFan()))
     ) {
       exptechEarthquakes.set(id, serial);
       const intensity = author === "cwa"
