@@ -946,17 +946,6 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         hidden: true
       },
       {
-        key: "sourceGeonetFeltReports",
-        labelKey: "settingsSourceGeonetFeltReports",
-        type: "select",
-        valueType: "boolean",
-        default: "on",
-        options: [
-          { value: "on", labelKey: "settingsEnabled" },
-          { value: "off", labelKey: "settingsDisabled" }
-        ]
-      },
-      {
         key: "sourceBreq",
         labelKey: "settingsSourceBreq",
         type: "select",
@@ -975,6 +964,17 @@ export const SETTINGS_SCHEMA: SettingSection[] = [
         default: "-99",
         inputMode: "decimal",
         hidden: true
+      },
+      {
+        key: "sourceGeonetFeltReports",
+        labelKey: "settingsSourceGeonetFeltReports",
+        type: "select",
+        valueType: "boolean",
+        default: "on",
+        options: [
+          { value: "on", labelKey: "settingsEnabled" },
+          { value: "off", labelKey: "settingsDisabled" }
+        ]
       },
       {
         key: "sourceKmoni",

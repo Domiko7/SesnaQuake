@@ -331,6 +331,7 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.9rem 1.25rem;
+  align-items: start;
 }
 
 .settings-field {
