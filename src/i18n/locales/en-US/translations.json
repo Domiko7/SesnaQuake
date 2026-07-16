@@ -101,6 +101,7 @@
   "settingsWaveAccuracyAccurate": "Accurate (TauP model)",
   "settingsWaveAccuracyEstimation": "Estimation (faster)",
   "settingsUiZoom": "Interface zoom",
+  "settingsUiZoomAuto": "Auto-detect",
   "settingsReloadNote": "Saving reloads the app",
   "settingsSources": "Data sources",
   "settingsSourceWolfxJma": "JMA EEW (Wolfx)",

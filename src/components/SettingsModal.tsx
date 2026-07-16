@@ -4,7 +4,7 @@ import { isPermissionGranted, requestPermission } from "@tauri-apps/plugin-notif
 import { enable as enableAutostart, disable as disableAutostart } from "@tauri-apps/plugin-autostart";
 import { SETTINGS_SCHEMA, formatSettings, parseSettings } from "../lib/settingsSchema";
 import type { SettingField, SettingOption } from "../lib/settingsSchema";
-import { getSettings, saveSettings } from "../lib/settings";
+import { getSettings, saveSettings, detectBestUiZoom } from "../lib/settings";
 import { testSpeak, playSound } from "../lib/speaker";
 import type { TtsConfig } from "../lib/speaker";
 import { eqSound, updateSound, eew2Sound, eew5Sound, reportSound, alertSound, resolveAlertStrongSound } from "../lib/sounds";
@@ -206,11 +206,16 @@ export const SettingsModal = ({ open, onClose }: SettingsModalProps) => {
                         onChange={(e) => setValue(field.key, e.target.value)}
                       />
                     )}
-                    {(SOUND_TEST_SOURCES[field.key] || customKey) && (
+                    {(SOUND_TEST_SOURCES[field.key] || customKey || field.key === "uiZoom") && (
                       <div className="settings-field__actions">
                         {SOUND_TEST_SOURCES[field.key] && (
                           <button type="button" className="settings-sound-test" onClick={() => handleTestSound(field.key)}>
                             {t("settingsSoundTest")}
+                          </button>
+                        )}
+                        {field.key === "uiZoom" && (
+                          <button type="button" className="settings-sound-test" onClick={() => setValue("uiZoom", String(detectBestUiZoom()))}>
+                            {t("settingsUiZoomAuto")}
                           </button>
                         )}
                         {customKey && (

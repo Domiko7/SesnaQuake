@@ -64,6 +64,20 @@ const applyUiZoom = (uiZoom: number): void => {
   requestAnimationFrame(() => window.dispatchEvent(new Event("resize")));
 };
 
+const UI_ZOOM_STEPS = [40, 50, 60, 75, 90, 100, 110, 125, 150, 175];
+const REFERENCE_WIDTH = 1920;
+const REFERENCE_HEIGHT = 1080;
+
+export const detectBestUiZoom = (): number => {
+  const width = window.innerWidth || window.screen.availWidth || REFERENCE_WIDTH;
+  const height = window.innerHeight || window.screen.availHeight || REFERENCE_HEIGHT;
+  const ratio = Math.min(width / REFERENCE_WIDTH, height / REFERENCE_HEIGHT) * 100;
+  const clamped = Math.min(100, Math.max(40, ratio));
+  return UI_ZOOM_STEPS.reduce((closest, step) =>
+    Math.abs(step - clamped) < Math.abs(closest - clamped) ? step : closest
+  );
+};
+
 export const loadSettings = async (): Promise<void> => {
   let raw: Record<string, string> | null = null;
 
@@ -81,7 +95,7 @@ export const loadSettings = async (): Promise<void> => {
     raw = readLegacyLocalStorage();
   }
 
-  const settings = raw ? parseSettings(raw) : DEFAULT_SETTINGS;
+  const settings = raw ? parseSettings(raw) : { ...DEFAULT_SETTINGS, uiZoom: detectBestUiZoom() };
   useSettingsStore.setState({ settings, isFirstLaunch: !raw });
   applyUiZoom(settings.uiZoom);
 };
