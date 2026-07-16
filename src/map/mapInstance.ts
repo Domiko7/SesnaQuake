@@ -4,7 +4,9 @@ import { getSettings } from "../lib/settings";
 import { initShakemap } from "../lib/shakemap";
 import { initStations } from "./stations";
 import { assetUrl } from "../lib/assetUrl";
+import { fetchGeojson } from "../lib/geojsonCache";
 import type { AppSettings } from "../lib/settingsSchema";
+import type { GeoJSONSource } from "maplibre-gl";
 
 export const getHomeLat = (): number => getSettings().lat;
 export const getHomeLon = (): number => getSettings().lon;
@@ -62,11 +64,11 @@ interface BorderStyle {
 
 const defaultBorderStyle: BorderStyle = { color: "#707173", width: 0.65, opacity: 0.5 };
 
-export const addGeojson = (geojson: string, country: string, borderStyle: BorderStyle = defaultBorderStyle): void => {
+export const addGeojson = (geojsonUrl: string, country: string, borderStyle: BorderStyle = defaultBorderStyle): void => {
   const m = getMap();
   m.addSource(country, {
     type: "geojson",
-    data: geojson,
+    data: { type: "FeatureCollection", features: [] },
   });
 
   m.addLayer({
@@ -89,6 +91,13 @@ export const addGeojson = (geojson: string, country: string, borderStyle: Border
       "line-opacity": borderStyle.opacity,
     },
   });
+
+  fetchGeojson(geojsonUrl)
+    .then((data) => {
+      const source = getMap().getSource(country) as GeoJSONSource | undefined;
+      source?.setData(data);
+    })
+    .catch((err) => console.error(`Failed to load "${country}" geojson:`, err));
 };
 
 export const flyZoom = (lon: number, lat: number, zoom: number, duration: number): void => {
@@ -235,6 +244,14 @@ export const createMap = (container: HTMLElement): maplibregl.Map => {
   });
 
   map.on("error", (e) => console.error("MapLibre error:", e?.error ?? e));
+
+  const canvas = map.getCanvas();
+  canvas.addEventListener("webglcontextlost", (e) => {
+    console.error("[map] WebGL context lost", e);
+  });
+  canvas.addEventListener("webglcontextrestored", () => {
+    console.warn("[map] WebGL context restored");
+  });
 
   map.on("load", () => {
     try {

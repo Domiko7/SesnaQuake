@@ -2,6 +2,7 @@ import { getMap } from "../map/mapInstance";
 import { getShakemapColor } from "./transform";
 import { getSettings } from "./settings";
 import { assetUrl } from "./assetUrl";
+import { fetchGeojson } from "./geojsonCache";
 import type { GeoJSONSource } from "maplibre-gl";
 import type { Feature, FeatureCollection, Polygon, MultiPolygon, Position } from "geojson";
 
@@ -220,9 +221,8 @@ let regionsLoaded: Promise<void> | null = null;
 
 const loadRegions = (): Promise<void> => {
   if (!regionsLoaded) {
-    regionsLoaded = Promise.all(regionFiles.map(async ({ url, scale }) => {
-      const res = await fetch(url);
-      const geojson = await res.json() as FeatureCollection;
+    regionsLoaded = Promise.allSettled(regionFiles.map(async ({ url, scale }) => {
+      const geojson = await fetchGeojson(url) as FeatureCollection;
       for (const feature of geojson.features) {
         if (feature.geometry?.type === "Polygon") {
           const rings = feature.geometry.coordinates;
@@ -232,7 +232,13 @@ const loadRegions = (): Promise<void> => {
           regions.push({ id: regions.length, feature: feature as Feature<MultiPolygon>, rings, scale, bbox: boundsOfRings(rings) });
         }
       }
-    })).then(() => {});
+    })).then((results) => {
+      results.forEach((result, i) => {
+        if (result.status === "rejected") {
+          console.error(`Failed to load "${regionFiles[i].scale}" shakemap regions:`, result.reason);
+        }
+      });
+    });
   }
   return regionsLoaded;
 };
@@ -265,7 +271,7 @@ export const initShakemap = () => {
       features: regions.map(({ id, feature }) => ({ ...feature, id })),
     });
     renderShakemap();
-  });
+  }).catch((err) => console.error("Failed to load shakemap regions:", err));
 };
 
 export const updateShakemap = (id: string, lat: number, lon: number, mag: number, depth: number) => {
